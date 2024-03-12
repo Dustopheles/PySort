@@ -1,0 +1,327 @@
+<MainWidget>:
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    do_default_tab: False
+    canvas:
+        Color:
+            rgb: .15, .15, .15
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    TabbedPanelItem:
+        text: 'Einstellungen'
+        GridLayout
+            cols: 1
+            rows: 3
+            BoxLayout
+                size_hint_y: None
+                height: 50
+                padding: 2, 1, 2 ,1
+                spacing: 1
+                canvas:
+                    Color:
+                        rgb: .15, .15, .15
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                    Color:
+                        rgba: .12, .12, .12, .9
+                    Rectangle:
+                        size: (self.width, 2)
+                        pos: (0, self.y)
+
+                Button
+                    size_hint_x: None
+                    width: 150
+                    text: 'Speichern'
+                    on_press: root.save_settings()
+
+            BoxLayout
+                orientation: 'horizontal'
+                GridLayout:
+                    size_hint_x: None
+                    width: 400
+                    cols: 1 
+                    rows: 5
+
+                    Label
+                        size_hint_y: None
+                        text_size: self.size
+                        padding: 18, 10, 0, 0
+                        valign: "center"
+                        halign: "left"
+                        size_hint: None, None
+                        width: 300
+                        height: 30
+                        text: 'Zahlengenerator'
+                        font_size: 20
+                        bold: True
+
+                    GridLayout
+                        cols: 2
+                        rows: 3
+                        padding: 5, 5, 5, 5
+                        size_hint_y: None
+                        col_default_width: 200
+                        row_default_height: 40
+                        spacing: 5, 1
+                        height: 150
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Anzahl Elemente'
+                        TextInput
+                            id: members
+                            size_hint: None, None
+                            multiline: False
+                            height: 30
+
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Untere Grenze'
+                        TextInput
+                            id: lower_limit
+                            size_hint: None, None
+                            multiline: False
+                            height: 30
+
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Obere Grenze'
+                        TextInput
+                            id: upper_limit
+                            size_hint: None, None
+                            multiline: False
+                            height: 30
+
+                    Label
+                        size_hint_y: None
+                        text_size: self.size
+                        padding: 18, 5, 0, 0
+                        valign: "center"
+                        halign: "left"
+                        size_hint: None, None
+                        width: 300
+                        height: 30
+                        text: 'Animation'
+                        font_size: 20
+                        bold: True
+
+                    GridLayout
+                        size_hint_y: None
+                        cols: 2
+                        rows: 3
+                        padding: 5, 5, 5, 5
+                        col_default_width: 200
+                        row_default_height: 40
+                        spacing: 5, 1
+                        height: 150
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Vergleichslänge [s]'
+                        TextInput
+                            id: compare_duration
+                            size_hint: None, None
+                            multiline: False
+                            height: 30
+
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Tauschlänge [s]'
+                        TextInput
+                            id: switch_duration
+                            size_hint: None, None
+                            multiline: False
+                            height: 30
+
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Pausenlänge [s]'
+                        TextInput
+                            id: pause_duration
+                            size_hint: None, None
+                            multiline: False
+                            height: 30
+
+                    Widget
+                
+                GridLayout:
+                    cols: 1 
+                    rows: 10
+
+                    Label
+                        size_hint_y: None
+                        text_size: self.size
+                        padding: 18, 10, 0, 0
+                        valign: "center"
+                        halign: "left"
+                        size_hint: None, None
+                        width: 300
+                        height: 30
+                        text: 'Sortierungsverfahren'
+                        font_size: 20
+                        bold: True
+
+                    GridLayout
+                        id: choice_grid
+                        size_hint_y: None
+                        cols: 1
+                        rows: 6
+                        padding: 15, 15, 5, 5
+                        col_default_width: 200
+                        row_default_height: 40
+                        spacing: 2, 2
+                        height: 180
+
+                    Widget
+
+            BoxLayout
+                canvas:
+                    Color:
+                        rgb: .15, .15, .15
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                    Color:
+                        rgba: .12, .12, .12, .9
+                    Rectangle:
+                        size: (self.width, 2)
+                        pos: (0, self.y+self.height)
+                size_hint_y: None
+                height: 25
+                Widget
+                Label
+                    size_hint_x: None
+                    width: self.width
+
+    TabbedPanelItem:
+        text: 'Visualisierer'
+        GridLayout
+            cols: 1
+            rows: 3
+            BoxLayout
+                size_hint_y: None
+                height: 50
+                padding: 2, 1, 2 ,1
+                spacing: 1
+                canvas:
+                    Color:
+                        rgb: .15, .15, .15
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                    Color:
+                        rgba: .12, .12, .12, .9
+                    Rectangle:
+                        size: (self.width, 2)
+                        pos: (0, self.y)
+
+                Button
+                    id: load_bttn
+                    size_hint_x: None
+                    width: 150
+                    text: 'Laden'
+                    on_press: root.load()
+
+                Button
+                    id: start_bttn
+                    size_hint_x: None
+                    width: 150
+                    text: 'Start'
+                    on_press: root.start()
+                    disabled: True
+
+                Button
+                    id: stop_bttn
+                    size_hint_x: None
+                    width: 150
+                    text: 'Stop'
+                    on_press: root.stop()
+                    disabled: True
+
+                Button
+                    id: previous_bttn
+                    size_hint_x: None
+                    width: 50
+                    text: '<'
+                    on_press: root.previous()
+                    disabled: True
+
+                Button
+                    id: next_bttn
+                    size_hint_x: None
+                    width: 50
+                    text: '>'
+                    on_press: root.next()
+                    disabled: True
+                
+                Label
+                    id: sort_label
+                    size_hint_x: None
+                    width: 220
+                    text: 'Sortierungsverfahren'
+                    padding: 1, 1, 1, 1
+                    halign: "left"
+                    valign: "middle"
+
+            FloatLayout
+                id: bars
+
+            BoxLayout
+                canvas:
+                    Color:
+                        rgb: .15, .15, .15
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                    Color:
+                        rgba: .12, .12, .12, .9
+                    Rectangle:
+                        size: (self.width, 2)
+                        pos: (0, self.y+self.height)
+                size_hint_y: None
+                height: 25
+                Widget
+                Label
+                    id: py_version
+                    size_hint_x: None
+                    width: 125
+                Label
+                    id: platform
+                    size_hint_x: None
+                    width: 125
