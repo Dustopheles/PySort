@@ -1,13 +1,13 @@
-"""Min sort module."""
+"""Minsort module."""
 
 from src.sorting.sort import Sort
 
 
-class MinSort(Sort):
-    """Min sort class."""
+class Minsort(Sort):
+    """Minsort class."""
     # pylint: disable=all
     def __init__(self, **kwargs):
-        super(MinSort, self).__init__(**kwargs)
+        super(Minsort, self).__init__(**kwargs)
         self.sort_name = 'Minsort'    
 
     def sort(self) -> None:

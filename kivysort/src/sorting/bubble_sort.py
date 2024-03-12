@@ -1,13 +1,13 @@
-"""Bubble sort module."""
+"""Bubblesort module."""
 
 from src.sorting.sort import Sort
 
 
-class BubbleSort(Sort):
-    """Bubble sort class."""
+class Bubblesort(Sort):
+    """Bubblesort class."""
     # pylint: disable=all
     def __init__(self, **kwargs):
-        super(BubbleSort, self).__init__(**kwargs)
+        super(Bubblesort, self).__init__(**kwargs)
         self.sort_name = 'Bubblesort'
 
     def sort(self) -> None:

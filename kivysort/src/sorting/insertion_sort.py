@@ -1,13 +1,13 @@
-"""Insertion sort module."""
+"""Insertionsort module."""
 
 from src.sorting.sort import Sort
 
 
-class InsertionSort(Sort):
-    """Insertion sort class."""
+class Insertionsort(Sort):
+    """Insertionsort class."""
     # pylint: disable=all
     def __init__(self, **kwargs):
-        super(InsertionSort, self).__init__(**kwargs)
+        super(Insertionsort, self).__init__(**kwargs)
         self.sort_name = 'Insertionsort'
 
     def sort(self) -> None:

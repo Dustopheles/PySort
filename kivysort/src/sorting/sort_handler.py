@@ -19,7 +19,7 @@ def available_sorts() -> list:
     sorts = []
     for module in modules:
         if "_sort.py" in module:
-            name = module.split('_')[0].capitalize() + 'Sort'
+            name = module.split('_')[0].capitalize() + 'sort'
             sorts.append(name)
 
     return sorts
