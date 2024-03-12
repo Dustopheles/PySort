@@ -13,7 +13,6 @@ from src.main_widget import MainWidget
 class SortApp(App):
     """Kivy app builder class."""
     def build(self):
-        # self.icon = 'res/nxLogo.ico'
         self.title = 'Der Großierer'
         self.configurate()
         Builder.load_file('src/kv/main.kv')
