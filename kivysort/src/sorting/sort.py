@@ -3,29 +3,38 @@
 from kivy.animation import Animation
 from kivy.clock import Clock
 
-from src.bar_widget import Bar
-from src.config import bar_dict as BAR
-from src.config import animation_dict as ANIM
+try:
+    from src.widgets.bar_widget import BarWidget
+    from src.configs.color_config import ColorConfig as Colors
+    from src.configs.animation_config import AnimationConfig as Durations
+except ImportError as i_err:
+    print(i_err)
 
 
 class Sort():
     """Sort base class."""
     def __init__(self, **kwargs):
-        self.ids = kwargs['ids']
-        # Ordered bar widget list
+        # Bar widgets
         self.bars = kwargs['bars']
         self.global_x = kwargs['static_x']
-        # Numbers to sort
+
+        # Numbers
         self.numbers = kwargs['numbers']
         self.sorted_numbers = []
-        # List of compares
+
+        # Compares
         self.pairs = []
         self.loop_counter = 0
-        # List of switches
+
+        # Switches
         self.switches = []
         self.switch_counter = 0
-        # List of all Events
+
+        # Events
         self.events = []
+        self.event_times = []
+
+        # Parent - Child
         self.sort_name = ''
 
     def sort(self):
@@ -37,7 +46,8 @@ class Sort():
         - Return next possible event time."""
         self.pairs.append((i_left, i_right))
         self.events.append(Clock.schedule_once(self.highlight_bars, time))
-        time += ANIM["compare_duration"] + ANIM["pause_duration"]
+        time += Durations.compare + Durations.pause
+        self.event_times.append(time)
         return time
 
     def schedule_switch(self, time: float, i_left: int, i_right: int) -> float:
@@ -45,16 +55,17 @@ class Sort():
         - Return next possible event time."""
         self.switches.append((i_left, i_right))
         self.events.append(Clock.schedule_once(self.switch_bars, time))
-        time += ANIM["switch_duration"] + ANIM["pause_duration"]
+        self.event_times.append(time)
+        time += Durations.switch + Durations.pause
         return time
 
-    def check_finished(self, widget: Bar) -> None:
+    def check_finished(self, widget: BarWidget) -> None:
         """Check if bar is in final place and color if."""
         index = self.bars.index(widget)
         if int(widget.text) == self.sorted_numbers[index]:
-            widget.redraw_rectangle(rgba=BAR['color_sorted'])
+            widget.redraw_rectangle(rgba=Colors.sorted)
 
-    def check_position(self, widget: Bar) -> None:
+    def check_position(self, widget: BarWidget) -> None:
         """Check if bar is on right x."""
         index = self.bars.index(widget)
         if widget.x != self.global_x[index]:
@@ -70,23 +81,23 @@ class Sort():
         self.highlight(r_bar)
         self.loop_counter += 1
 
-    def highlight(self, widget: Bar) -> Animation:
+    def highlight(self, widget: BarWidget) -> Animation:
         """Highlighting animation."""
         animation = Animation(x=widget.x, y=widget.y,
-                              duration=ANIM["compare_duration"])
+                              duration=Durations.compare)
         animation.bind(on_start=self.highlight_on_start)
         animation.bind(on_complete=self.highlight_on_complete)
         animation.start(widget)
         return animation
 
-    def highlight_on_start(self, _animation, widget: Bar) -> None:
+    def highlight_on_start(self, _animation, widget: BarWidget) -> None:
         """Switch color on animation start."""
-        widget.redraw_rectangle(rgba=BAR['color_active'])
+        widget.redraw_rectangle(rgba=Colors.active)
 
-    def highlight_on_complete(self, _animation, widget: Bar) -> None:
+    def highlight_on_complete(self, _animation, widget: BarWidget) -> None:
         """Reset color after animation completion."""
         self.check_position(widget)
-        widget.redraw_rectangle(rgba=BAR['color_passive'])
+        widget.redraw_rectangle(rgba=Colors.passive)
         self.check_finished(widget)
 
     def switch_bars(self, _timing) -> None:
@@ -107,25 +118,21 @@ class Sort():
         self.bars[self.switches[self.switch_counter][1]] = left
         self.switch_counter += 1
 
-    def switch(self, widget: Bar, x: int) -> Animation:
+    def switch(self, widget: BarWidget, x: int) -> Animation:
         """Switch animation."""
         animation = Animation(x=x, y=widget.y,
-                              duration=ANIM["switch_duration"])
+                              duration=Durations.switch)
         animation.bind(on_start=self.switch_on_start)
         animation.bind(on_complete=self.switch_on_complete)
         animation.start(widget)
         return animation
 
-    def switch_on_start(self, _animation, widget: Bar) -> None:
+    def switch_on_start(self, _animation, widget: BarWidget) -> None:
         """Reactivate start bttn after finishing animation."""
-        widget.redraw_rectangle(rgba=BAR['color_switch'])
-        if self.switch_counter == 0:
-            self.ids.start_bttn.disabled = True
+        widget.redraw_rectangle(rgba=Colors.switch)
 
-    def switch_on_complete(self, _animation, widget: Bar) -> None:
+    def switch_on_complete(self, _animation, widget: BarWidget) -> None:
         """Reactivate start bttn after finishing animation."""
         self.check_position(widget)
-        widget.redraw_rectangle(rgba=BAR['color_passive'])
-        if self.switch_counter >= len(self.switches):
-            self.ids.start_bttn.disabled = False
+        widget.redraw_rectangle(rgba=Colors.passive)
         self.check_finished(widget)

@@ -1,19 +1,20 @@
 """Main UI module for Kivy."""
 
+import os
+import sys
+
 from kivy.app import App
 from kivy.config import Config
 from kivy.lang import Builder
-import os
-import sys
 from kivy.resources import resource_add_path
 
-from src.main_widget import MainWidget
+from src.widgets.main_widget import MainWidget
 
 
 class SortApp(App):
     """Kivy app builder class."""
     def build(self):
-        self.title = 'Der Großierer'
+        self.title = 'PySort - Visualisierer für Sortierverfahren'
         self.configurate()
         Builder.load_file('src/kv/main.kv')
         return MainWidget()
@@ -29,5 +30,6 @@ class SortApp(App):
 
 if __name__ == '__main__':
     if hasattr(sys, '_MEIPASS'):
+        # pylint: disable=protected-access
         resource_add_path(os.path.join(sys._MEIPASS))
     SortApp().run()

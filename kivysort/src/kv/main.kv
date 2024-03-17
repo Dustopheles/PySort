@@ -1,3 +1,8 @@
+#: import BarLayout src.widgets.bar_layout.BarLayout
+#: import InfoLayout src.widgets.info_layout.InfoLayout
+#: import FloatInput src.widgets.float_input.FloatInput
+#: import IntInput src.widgets.int_input.IntInput
+
 <MainWidget>:
     pos_hint: {'center_x': .5, 'center_y': .5}
     do_default_tab: False
@@ -31,10 +36,25 @@
                         pos: (0, self.y)
 
                 Button
+                    id: save_bttn
                     size_hint_x: None
                     width: 150
                     text: 'Speichern'
-                    on_press: root.save_settings()
+                    on_press: root.save_settings_on_press()
+
+                Button
+                    id: save_n_load_bttn
+                    size_hint_x: None
+                    width: 150
+                    text: 'Speichern & Laden'
+                    on_press: root.save_and_load_settings_on_press()
+
+                Button
+                    id: reset_bttn
+                    size_hint_x: None
+                    width: 150
+                    text: 'Zurücksetzen'
+                    on_press: root.reset_settings_on_press()
 
             BoxLayout
                 orientation: 'horizontal'
@@ -75,7 +95,7 @@
                             width: 150
                             height: 30
                             text: 'Anzahl Elemente'
-                        TextInput
+                        IntInput
                             id: members
                             size_hint: None, None
                             multiline: False
@@ -90,7 +110,7 @@
                             width: 150
                             height: 30
                             text: 'Untere Grenze'
-                        TextInput
+                        IntInput
                             id: lower_limit
                             size_hint: None, None
                             multiline: False
@@ -105,7 +125,7 @@
                             width: 150
                             height: 30
                             text: 'Obere Grenze'
-                        TextInput
+                        IntInput
                             id: upper_limit
                             size_hint: None, None
                             multiline: False
@@ -142,7 +162,7 @@
                             width: 150
                             height: 30
                             text: 'Vergleichslänge [s]'
-                        TextInput
+                        FloatInput
                             id: compare_duration
                             size_hint: None, None
                             multiline: False
@@ -157,7 +177,7 @@
                             width: 150
                             height: 30
                             text: 'Tauschlänge [s]'
-                        TextInput
+                        FloatInput
                             id: switch_duration
                             size_hint: None, None
                             multiline: False
@@ -172,7 +192,7 @@
                             width: 150
                             height: 30
                             text: 'Pausenlänge [s]'
-                        TextInput
+                        FloatInput
                             id: pause_duration
                             size_hint: None, None
                             multiline: False
@@ -210,24 +230,8 @@
 
                     Widget
 
-            BoxLayout
-                canvas:
-                    Color:
-                        rgb: .15, .15, .15
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                    Color:
-                        rgba: .12, .12, .12, .9
-                    Rectangle:
-                        size: (self.width, 2)
-                        pos: (0, self.y+self.height)
-                size_hint_y: None
-                height: 25
-                Widget
-                Label
-                    size_hint_x: None
-                    width: self.width
+            InfoLayout
+                width: self.width
 
     TabbedPanelItem:
         text: 'Visualisierer'
@@ -256,14 +260,14 @@
                     size_hint_x: None
                     width: 150
                     text: 'Laden'
-                    on_press: root.load()
+                    on_press: root.load_on_press()
 
                 Button
                     id: start_bttn
                     size_hint_x: None
                     width: 150
                     text: 'Start'
-                    on_press: root.start()
+                    on_press: root.start_on_press()
                     disabled: True
 
                 Button
@@ -271,7 +275,7 @@
                     size_hint_x: None
                     width: 150
                     text: 'Stop'
-                    on_press: root.stop()
+                    on_press: root.stop_on_press()
                     disabled: True
 
                 Button
@@ -279,7 +283,7 @@
                     size_hint_x: None
                     width: 50
                     text: '<'
-                    on_press: root.previous()
+                    on_press: root.previous_on_press()
                     disabled: True
 
                 Button
@@ -287,7 +291,7 @@
                     size_hint_x: None
                     width: 50
                     text: '>'
-                    on_press: root.next()
+                    on_press: root.next_on_press()
                     disabled: True
                 
                 Label
@@ -299,29 +303,8 @@
                     halign: "left"
                     valign: "middle"
 
-            FloatLayout
+            BarLayout
                 id: bars
 
-            BoxLayout
-                canvas:
-                    Color:
-                        rgb: .15, .15, .15
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                    Color:
-                        rgba: .12, .12, .12, .9
-                    Rectangle:
-                        size: (self.width, 2)
-                        pos: (0, self.y+self.height)
-                size_hint_y: None
-                height: 25
-                Widget
-                Label
-                    id: py_version
-                    size_hint_x: None
-                    width: 125
-                Label
-                    id: platform
-                    size_hint_x: None
-                    width: 125
+            InfoLayout
+                width: self.width

@@ -13,11 +13,11 @@ class Shellsort(Sort):
     def sort(self) -> None:
         """Shellsort algorithm."""
         i_list = self.numbers
-        n = len(i_list)
+        length = len(i_list)
         timing = 0
-        gap = int(n/2)
+        gap = int(length/2)
         while gap > 0:
-            for i in range(gap,n):
+            for i in range(gap,length):
                 temp = i_list[i]
                 j = i
                 timing = self.schedule_compare(timing, j, j-gap)
