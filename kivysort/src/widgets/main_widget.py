@@ -5,8 +5,8 @@ from kivy.uix.tabbedpanel import TabbedPanel
 try:
     from src.util.settings import Settings
     from src.util.visualizer import Visualizer
-except ImportError as e:
-    print(e)
+except ImportError as i_err:
+    print(i_err)
 
 
 class MainWidget(TabbedPanel):
@@ -25,14 +25,22 @@ class MainWidget(TabbedPanel):
     def load_on_press(self):
         """Load button event."""
         self.visualizer.load()
+        self.enable_widgets('start_bttn', 'stop_bttn',
+                            'next_bttn', 'previous_bttn',
+                            'save_bttn', 'reset_bttn')
 
     def start_on_press(self):
         """Start button event."""
         self.visualizer.start()
+        self.disable_widgets('start_bttn',
+                             'next_bttn', 'previous_bttn',
+                             'save_bttn', 'reset_bttn')
 
     def stop_on_press(self):
         """Stop button event."""
         self.visualizer.stop()
+        self.enable_widgets('start_bttn',
+                    'next_bttn', 'previous_bttn')
 
     def previous_on_press(self):
         """Previous button event."""
@@ -48,9 +56,19 @@ class MainWidget(TabbedPanel):
 
     def save_and_load_settings_on_press(self) -> None:
         """Save and load button event."""
-        self.save_settings_on_press()
-        self.load_on_press()
+        self.settings.save_settings()
+        self.visualizer.load()
 
     def reset_settings_on_press(self) -> None:
         """Reset button event."""
         self.settings.reset_settings()
+
+    def disable_widgets(self, *args):
+        """Disable list of widgets."""
+        for ident in args:
+            self.ids[ident].disabled = True
+
+    def enable_widgets(self, *args):
+        """Enable list of widgets."""
+        for ident in args:
+            self.ids[ident].disabled = False

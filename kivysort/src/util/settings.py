@@ -4,8 +4,8 @@ try:
     from src.configs.generator_config import GeneratorConfig as Generator
     from src.configs.animation_config import AnimationConfig as Durations
     #from src.configs.color_config import ColorConfig as Colors
-except ImportError as e:
-    print(e)
+except ImportError as i_err:
+    print(i_err)
 
 class Settings():
     """Settings class."""

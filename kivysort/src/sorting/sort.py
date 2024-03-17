@@ -7,6 +7,7 @@ try:
     from src.widgets.bar_widget import BarWidget
     from src.configs.color_config import ColorConfig as Colors
     from src.configs.animation_config import AnimationConfig as Durations
+    from src.util.operation import Operation
 except ImportError as i_err:
     print(i_err)
 
@@ -33,31 +34,33 @@ class Sort():
         # Events
         self.events = []
         self.event_times = []
-
-        # Parent - Child
-        self.sort_name = ''
+        self.time = 0
 
     def sort(self):
         """Sort method."""
 
-    def schedule_compare(self, time: float,
-                         i_left: int, i_right: int) -> float:
+    def schedule_event(self, operation: str, i_left: int, i_right: int) -> None:
+        """Redirect event to type."""
+        if operation == "compare":
+            self.schedule_compare(i_left, i_right)
+        elif operation == "switch":
+            self.schedule_switch(i_left, i_right)
+
+    def schedule_compare(self, i_left: int, i_right: int) -> None:
         """Schedule compare event on time x.
         - Return next possible event time."""
         self.pairs.append((i_left, i_right))
-        self.events.append(Clock.schedule_once(self.highlight_bars, time))
-        time += Durations.compare + Durations.pause
-        self.event_times.append(time)
-        return time
+        self.events.append(Clock.schedule_once(self.highlight_bars, self.time))
+        self.event_times.append(self.time)
+        self.time += Durations.compare + Durations.pause
 
-    def schedule_switch(self, time: float, i_left: int, i_right: int) -> float:
+    def schedule_switch(self, i_left: int, i_right: int) -> None:
         """Schedule compare event on time x.
         - Return next possible event time."""
         self.switches.append((i_left, i_right))
-        self.events.append(Clock.schedule_once(self.switch_bars, time))
-        self.event_times.append(time)
-        time += Durations.switch + Durations.pause
-        return time
+        self.events.append(Clock.schedule_once(self.switch_bars, self.time))
+        self.event_times.append(self.time)
+        self.time += Durations.switch + Durations.pause
 
     def check_finished(self, widget: BarWidget) -> None:
         """Check if bar is in final place and color if."""

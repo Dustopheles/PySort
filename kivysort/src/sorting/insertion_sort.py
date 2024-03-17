@@ -11,14 +11,14 @@ class Insertionsort(Sort):
         self.sort_name = 'Insertionsort'
 
     def sort(self) -> None:
-        """Insertion sort algorithm."""
+        """Insertionsort algorithm."""
         i_list = self.numbers
-        timing = 0
-        for k in range(1, len(i_list)):
+        length = len(i_list)
+        for k in range(1, length):
             i = k
-            timing = self.schedule_compare(timing, i-1, i)
+            self.schedule_event("compare", i-1, i)
             while (i_list[i] < i_list[i-1]) and (i > 0):
                 i_list[i-1], i_list[i] = i_list[i], i_list[i-1]
-                timing = self.schedule_switch(timing, i-1, i)
+                self.schedule_event("switch", i-1, i)
                 i = i - 1
         self.sorted_numbers = i_list

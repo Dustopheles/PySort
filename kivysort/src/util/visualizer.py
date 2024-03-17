@@ -1,15 +1,14 @@
 """Visualizer logic module."""
 
 import random
-import gc
 
 from kivy.uix.togglebutton import ToggleButton
 
 try:
     from src.configs.generator_config import GeneratorConfig as Generator
     from src.sorting.sort_handler import SortHandler
-except ImportError as e:
-    print(e)
+except ImportError as i_err:
+    print(i_err)
 
 class Visualizer():
     """Visualizer class."""
@@ -17,6 +16,8 @@ class Visualizer():
         self.ids = ids
         self.sort_name = "Bubblesort"
         self.sort_obj = None
+        self.comp_id = 0
+        self.switch_id = 0
 
     def fill_grid(self) -> None:
         """Fill choice grid with choices."""
@@ -33,7 +34,6 @@ class Visualizer():
 
     def load(self):
         """Generate random number."""
-        self.clear_workspace()
         numbers = []
         for _i in range(Generator.members):
             numbers.append(random.randint(Generator.lower_limit,
@@ -42,84 +42,91 @@ class Visualizer():
         self.ids["bars"].numbers = numbers
         self.ids["bars"].clear_bars()
         self.ids["bars"].build_bars()
-        self.ids['start_bttn'].disabled = False
-        self.ids['stop_bttn'].disabled = False
-        self.ids['next_bttn'].disabled = False
-        self.ids['previous_bttn'].disabled = False
-        self.ids['save_bttn'].disabled = False
-        self.ids['reset_bttn'].disabled = False
+
         self.sort_obj = SortHandler.get_sort(sort=self.sort_name,
                                              numbers=numbers,
                                              bars=self.ids["bars"].bars,
                                              static_x=self.ids["bars"].static_x)
+
         self.ids["bars"].sort_obj = self.sort_obj
         self.ids['sort_label'].text = self.sort_obj.sort_name
 
-    def clear_workspace(self) -> None:
-        """Clear lists and widgets."""
-        self.sort_obj = None
-        gc.collect()
-
     def start(self):
         """Start sorting animation."""
-        self.ids['next_bttn'].disabled = True
-        self.ids['previous_bttn'].disabled = True
-        self.ids['start_bttn'].disabled = True
-        self.ids['save_bttn'].disabled = True
-        self.ids['reset_bttn'].disabled = True
         self.call_sort()
 
     def call_sort(self):
         """Call selected sorting class."""
-        if self.sort_obj.events:
-            ident = self.sort_obj.loop_counter + self.sort_obj.switch_counter
-            for i in range(ident, len(self.sort_obj.events)-1):
-                timeout = self.sort_obj.event_times[i] - self.sort_obj.event_times[ident]
-                self.sort_obj.events[i].timeout = timeout
-                self.sort_obj.events[i]()
-        else:
+        if not self.sort_obj.events:
             self.sort_obj.sort()
+            return
+        self.correct_zero()
+
+        ident = self.sort_obj.loop_counter + self.sort_obj.switch_counter
+        for i in range(ident, len(self.sort_obj.events)-1):
+            timeout = self.sort_obj.event_times[i] - self.sort_obj.event_times[ident]
+            self.sort_obj.events[i].timeout = timeout
+            self.sort_obj.events[i]()
 
     def stop(self):
         """Stop animation."""
-        if self.sort_obj:
-            for event in self.sort_obj.events:
-                event.cancel()
-            self.ids.start_bttn.disabled = False
-        self.ids['next_bttn'].disabled = False
-        self.ids['previous_bttn'].disabled = False
-        self.ids['start_bttn'].disabled = False
+        if not self.sort_obj:
+            return
+        for event in self.sort_obj.events:
+            event.cancel()
+        self.comp_id = self.sort_obj.loop_counter
+        self.switch_id = self.sort_obj.switch_counter
+
+    def correct_zero(self) -> None:
+        """Correct index."""
+        if self.comp_id <= 0:
+            self.sort_obj.loop_counter = 0
+        if self.switch_id <= 0:
+            self.sort_obj.switch_counter = 0
 
     def previous(self):
         """Go to previous animation step."""
         if not self.sort_obj:
             return
-        index = self.sort_obj.loop_counter + self.sort_obj.switch_counter
-        if index <= 0:
+
+        index = self.comp_id + self.switch_id - 1
+        if index < 0:
             return
         event = self.sort_obj.events[index]
         name = event.weak_callback.method_name
         if name == "switch_bars":
-            self.sort_obj.switch_counter -= 1
-            event.timeout = 0.1
-            event()
-        else:
-            index = self.sort_obj.loop_counter + self.sort_obj.switch_counter -1
-            if index <= 0:
+            if self.switch_id < 0:
                 return
-            event = self.sort_obj.events[index]
-            name = event.weak_callback.method_name
-            self.sort_obj.loop_counter -= 1
+            self.sort_obj.switch_counter = self.switch_id - 1
             event.timeout = 0.1
             event()
+            self.switch_id -= 1
+        elif name == "highlight_bars":
+            if self.comp_id < 0:
+                return
+            self.sort_obj.loop_counter = self.comp_id - 1
+            event.timeout = 0.1
+            event()
+            self.comp_id -= 1
 
     def next(self):
         """Go to next animation step."""
+        print(f"NPre: {self.sort_obj.loop_counter}")
+        print(f"NPre: {self.sort_obj.switch_counter}")
         if not self.sort_obj:
             return
+        
+        self.correct_zero()
         index = self.sort_obj.loop_counter + self.sort_obj.switch_counter
-        if index >= len(self.sort_obj.events)-1:
+        if index >= len(self.sort_obj.events) - 1:
             return
         event = self.sort_obj.events[index]
         event.timeout = 0.1
         event()
+        name = event.weak_callback.method_name
+        if name == "switch_bars":
+            self.comp_id = self.sort_obj.loop_counter
+            self.switch_id = self.sort_obj.switch_counter + 1
+        else:
+            self.comp_id = self.sort_obj.loop_counter + 1
+            self.switch_id = self.sort_obj.switch_counter
