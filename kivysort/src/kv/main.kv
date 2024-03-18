@@ -60,7 +60,7 @@
                 orientation: 'horizontal'
                 GridLayout:
                     size_hint_x: None
-                    width: 400
+                    width: 375
                     cols: 1 
                     rows: 5
 
@@ -200,6 +200,125 @@
 
                     Widget
                 
+
+                GridLayout:
+                    size_hint_x: None
+                    width: 275
+                    cols: 1 
+                    rows: 3
+
+                    Label
+                        size_hint_y: None
+                        text_size: self.size
+                        padding: 18, 10, 0, 0
+                        valign: "center"
+                        halign: "left"
+                        size_hint: None, None
+                        width: 300
+                        height: 30
+                        text: 'Diagrammfarben'
+                        font_size: 20
+                        bold: True
+
+                    GridLayout
+                        cols: 2
+                        rows: 4
+                        padding: 5, 5, 5, 5
+                        size_hint_y: None
+                        col_default_width: 50
+                        row_default_height: 40
+                        spacing: 5, 1
+                        height: 150
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Standard'
+                        Button
+                            id: passive_color
+                            background_normal: ''
+                            size_hint: None, None
+                            height: 30
+                            width: 30
+                            canvas.before:
+                                Color:
+                                    rgba: .5, .5, .5, 1
+                                Line:
+                                    width: 2
+                                    rectangle: self.x, self.y, self.width, self.height
+
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Vergleich'
+                        Button
+                            id: active_color
+                            background_normal: ''
+                            size_hint: None, None
+                            height: 30
+                            width: 30
+                            canvas.before:
+                                Color:
+                                    rgba: .5, .5, .5, 1
+                                Line:
+                                    width: 2
+                                    rectangle: self.x, self.y, self.width, self.height
+
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Tausch'
+                        Button
+                            id: switch_color
+                            background_normal: ''
+                            size_hint: None, None
+                            height: 30
+                            width: 30
+                            canvas.before:
+                                Color:
+                                    rgba: .5, .5, .5, 1
+                                Line:
+                                    width: 2
+                                    rectangle: self.x, self.y, self.width, self.height
+
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Sortiert'
+                        Button
+                            id: sorted_color
+                            background_normal: ''
+                            size_hint: None, None
+                            height: 30
+                            width: 30
+                            canvas.before:
+                                Color:
+                                    rgba: .5, .5, .5, 1
+                                Line:
+                                    width: 2
+                                    rectangle: self.x, self.y, self.width, self.height
+
+                    Widget
+
                 GridLayout:
                     cols: 1 
                     rows: 10

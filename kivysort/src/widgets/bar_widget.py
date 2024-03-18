@@ -27,7 +27,7 @@ class BarWidget(Label):
         r, g, b, a = rgba
         self.canvas.clear()
         with self.canvas:
-            self.canvas_color = Color(r/255, g/255, b/255, a)
+            self.canvas_color = Color(r, g, b, a)
             self.rect = Rectangle(pos=self.pos, size=self.size)
             self.label = NumberLabel(self, text=self.text,
                                      pos=(self.x, self.y - 35),

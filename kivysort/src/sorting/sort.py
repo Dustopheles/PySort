@@ -7,7 +7,6 @@ try:
     from src.widgets.bar_widget import BarWidget
     from src.configs.color_config import ColorConfig as Colors
     from src.configs.animation_config import AnimationConfig as Durations
-    from src.util.operation import Operation
 except ImportError as i_err:
     print(i_err)
 
@@ -24,8 +23,8 @@ class Sort():
         self.sorted_numbers = []
 
         # Compares
-        self.pairs = []
-        self.loop_counter = 0
+        self.compares = []
+        self.compare_counter = 0
 
         # Switches
         self.switches = []
@@ -49,8 +48,9 @@ class Sort():
     def schedule_compare(self, i_left: int, i_right: int) -> None:
         """Schedule compare event on time x.
         - Return next possible event time."""
-        self.pairs.append((i_left, i_right))
-        self.events.append(Clock.schedule_once(self.highlight_bars, self.time))
+        self.compares.append((i_left, i_right))
+        event = Clock.schedule_once(self.highlight_bars, self.time)
+        self.events.append(event)
         self.event_times.append(self.time)
         self.time += Durations.compare + Durations.pause
 
@@ -58,7 +58,8 @@ class Sort():
         """Schedule compare event on time x.
         - Return next possible event time."""
         self.switches.append((i_left, i_right))
-        self.events.append(Clock.schedule_once(self.switch_bars, self.time))
+        event = Clock.schedule_once(self.switch_bars, self.time)
+        self.events.append(event)
         self.event_times.append(self.time)
         self.time += Durations.switch + Durations.pause
 
@@ -76,13 +77,13 @@ class Sort():
 
     def highlight_bars(self, _timing) -> None:
         """Highlight selected bars."""
-        if self.loop_counter >= len(self.pairs):
+        if self.compare_counter >= len(self.compares):
             return
-        l_bar = self.bars[self.pairs[self.loop_counter][0]]
-        r_bar = self.bars[self.pairs[self.loop_counter][1]]
+        l_bar = self.bars[self.compares[self.compare_counter][0]]
+        r_bar = self.bars[self.compares[self.compare_counter][1]]
         self.highlight(l_bar)
         self.highlight(r_bar)
-        self.loop_counter += 1
+        self.compare_counter += 1
 
     def highlight(self, widget: BarWidget) -> Animation:
         """Highlighting animation."""

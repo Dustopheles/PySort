@@ -8,10 +8,10 @@ except ImportError as i_err:
 class ColorConfig():
     """Color config class."""
     section = "Color"
-    passive: list = [90, 90, 90, 0.9]
-    active: list = [180, 180, 180, 0.9]
-    switch: list = [255, 165, 0, 0.9]
-    sorted: list = [60, 179, 113, 0.9]
+    passive = (90/255, 90/255, 90/255, 0.9)
+    active = (180/255, 180/255, 180/255, 0.9)
+    switch = (1.0, 165/255, 0.0, 0.9)
+    sorted = (60/255, 179/255, 113/255, 0.9)
 
     @staticmethod
     def fixed(list_str: str) -> list:
@@ -77,7 +77,7 @@ class ColorConfig():
     @staticmethod
     def reset() -> None:
         """Reset values to fallback"""
-        ColorConfig.passive = [90, 90, 90, 0.9]
-        ColorConfig.active = [180, 180, 180, 0.9]
-        ColorConfig.switch = [255, 165, 0, 0.9]
-        ColorConfig.sorted = [60, 179, 113, 0.9]
+        ColorConfig.passive = (90/255, 90/255, 90/255, 0.9)
+        ColorConfig.active = (180/255, 180/255, 180/255, 0.9)
+        ColorConfig.switch = (1, 165/255, 0, 0.9)
+        ColorConfig.sorted = (60/255, 179/255, 113/255, 0.9)

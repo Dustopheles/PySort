@@ -58,6 +58,9 @@ class MainWidget(TabbedPanel):
         """Save and load button event."""
         self.settings.save_settings()
         self.visualizer.load()
+        self.enable_widgets('start_bttn', 'stop_bttn',
+                            'next_bttn', 'previous_bttn',
+                            'save_bttn', 'reset_bttn')
 
     def reset_settings_on_press(self) -> None:
         """Reset button event."""
@@ -72,3 +75,7 @@ class MainWidget(TabbedPanel):
         """Enable list of widgets."""
         for ident in args:
             self.ids[ident].disabled = False
+
+    def popup_on_press(self) -> None:
+        """Popup on button press event."""
+        self.settings.create_popup()
