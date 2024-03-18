@@ -1,3 +1,6 @@
+"""Windows 8+ PyInstall AppBuilder."""
+
+import os
 import PyInstaller.__main__
 
 parameter_list = [
@@ -5,23 +8,26 @@ parameter_list = [
     '--noconfirm',
     '--log-level=WARN',
     '--name=pysorter',
-    '--icon=.\\kivysort\\res\\nxLogo.ico',
     '--noconsole'
 ]
 
 PyInstaller.__main__.run(parameter_list)
 
-spec = ""
+SPEC = ""
 with open('pysorter.spec', 'r', encoding='utf8') as file:
-    spec = file.read()
+    SPEC = file.read()
 
-spec = 'from kivy_deps import sdl2, glew\n' + spec
+SPEC = 'from kivy_deps import sdl2, glew\n' + SPEC
 
-spec = spec.replace('a.datas,', "a.datas, *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],")
-spec = spec.replace('exe,', r"exe, Tree('C:\\Projekte\\PySort\\kivysort\\'),")
+abs_path = os.path.abspath('.')
+local_path = os.path.join(abs_path, 'kivysort', '')
+local_path = local_path.replace('\\', '\\\\')
+
+SPEC = SPEC.replace('a.datas,', "a.datas, *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],")
+SPEC = SPEC.replace('exe,', rf"exe, Tree('{local_path}'),")
 
 with open('pysorter.spec', 'w', encoding='utf8') as file:
-    file.write(spec)
+    file.write(SPEC)
 
 parameter_list = [
     '.\\pysorter.spec',
