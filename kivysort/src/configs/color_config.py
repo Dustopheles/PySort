@@ -79,5 +79,5 @@ class ColorConfig():
         """Reset values to fallback"""
         ColorConfig.passive = (90/255, 90/255, 90/255, 0.9)
         ColorConfig.active = (180/255, 180/255, 180/255, 0.9)
-        ColorConfig.switch = (1, 165/255, 0, 0.9)
+        ColorConfig.switch = (1.0, 165/255, 0.0, 0.9)
         ColorConfig.sorted = (60/255, 179/255, 113/255, 0.9)
