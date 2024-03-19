@@ -76,7 +76,7 @@ class BarLayout(FloatLayout):
         with self.canvas:
             self.canvas_color = Color(r, g, b, a)
             self.rect = Rectangle(pos=self.pos, size=self.size)
-        self.canvas.ask_update()
+            self.canvas.ask_update()
 
         # pylint: disable=no-member
         self.bind(pos=self.update_rect)

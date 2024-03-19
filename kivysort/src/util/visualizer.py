@@ -65,8 +65,6 @@ class Visualizer():
         self.correct_indexes()
 
         ident = self.sort_obj.compare_counter + self.sort_obj.switch_counter
-        print(f"Call: Com: {self.sort_obj.compare_counter}")
-        print(f"Call: Swi: {self.sort_obj.switch_counter}\n")
         for i in range(ident, len(self.sort_obj.events)-1):
             timeout = self.sort_obj.event_times[i] - self.sort_obj.event_times[ident]
             self.sort_obj.events[i].timeout = timeout

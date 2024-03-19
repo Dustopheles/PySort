@@ -8,8 +8,8 @@ except ImportError as i_err:
 class ColorConfig():
     """Color config class."""
     section = "Color"
-    background = (.2, .2, .2, 1)
-    passive = (90/255, 90/255, 90/255, 0.9)
+    background = (36/255, 40/255, 47/255, 1)
+    passive = (70/255, 77/255, 88/255, 1)
     active = (180/255, 180/255, 180/255, 0.9)
     switch = (1.0, 165/255, 0.0, 0.9)
     sorted = (60/255, 179/255, 113/255, 0.9)
@@ -84,8 +84,8 @@ class ColorConfig():
     @staticmethod
     def reset() -> None:
         """Reset values to fallback"""
-        ColorConfig.background = (.2, .2, .2, 1)
-        ColorConfig.passive = (90/255, 90/255, 90/255, 0.9)
+        ColorConfig.background = (36/255, 40/255, 47/255, 1)
+        ColorConfig.passive = (70/255, 77/255, 88/255, 1)
         ColorConfig.active = (180/255, 180/255, 180/255, 0.9)
         ColorConfig.switch = (1.0, 165/255, 0.0, 0.9)
         ColorConfig.sorted = (60/255, 179/255, 113/255, 0.9)

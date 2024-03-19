@@ -21,8 +21,8 @@ class SortApp(App):
 
     def configurate(self):
         """Set up kivy config."""
-        Config.set('graphics', 'minimum_width', '610')
-        Config.set('graphics', 'minimum_height', '450')
+        Config.set('graphics', 'minimum_width', '900')
+        Config.set('graphics', 'minimum_height', '500')
         Config.set('graphics', 'width', '900')
         Config.set('graphics', 'height', '600')
         Config.set('kivy', 'kivy_clock', 'interrupt')

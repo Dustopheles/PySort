@@ -14,7 +14,7 @@ class BarWidget(Label):
     def __init__(self, **kwargs):
         super(BarWidget, self).__init__(**kwargs)
         self.size_hint = (None, None)
-        self.pos = (kwargs["x"], 80)
+        self.pos = (kwargs["x"], 100)
         self.size = (kwargs["width"], kwargs["height"])
 
         self.text = kwargs["text"]

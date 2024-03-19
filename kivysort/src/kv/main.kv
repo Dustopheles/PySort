@@ -4,60 +4,48 @@
 #: import IntInput src.widgets.int_input.IntInput
 
 <MainWidget>:
+    border: [0, 0, 0, 0]
     pos_hint: {'center_x': .5, 'center_y': .5}
     do_default_tab: False
+    tab_width: self.width/2
+    scroll_type: ["bars"]
     canvas:
         Color:
-            rgb: .15, .15, .15
+            rgba: (23/255, 29/255, 37/255, 1)
         Rectangle:
             size: self.size
             pos: self.pos
 
     TabbedPanelItem:
-        text: 'Einstellungen'
+        text: 'EINSTELLUNGEN'
         GridLayout
             cols: 1
             rows: 3
-            BoxLayout
-                size_hint_y: None
-                height: 50
-                padding: 2, 1, 2 ,1
-                spacing: 1
-                canvas:
-                    Color:
-                        rgb: .15, .15, .15
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                    Color:
-                        rgba: .12, .12, .12, .9
-                    Rectangle:
-                        size: (self.width, 2)
-                        pos: (0, self.y)
+            HeaderBar
 
-                Button
+                ActionButton
                     id: save_bttn
-                    size_hint_x: None
-                    width: 150
                     text: 'Speichern'
                     on_press: root.save_settings_on_press()
 
-                Button
+                ActionButton
                     id: save_n_load_bttn
-                    size_hint_x: None
-                    width: 150
                     text: 'Speichern & Laden'
                     on_press: root.save_and_load_settings_on_press()
 
-                Button
+                ActionButton
                     id: reset_bttn
-                    size_hint_x: None
-                    width: 150
                     text: 'Zurücksetzen'
                     on_press: root.reset_settings_on_press()
 
             BoxLayout
                 orientation: 'horizontal'
+                canvas:
+                    Color:
+                        rgba: 36/255, 40/255, 47/255, 1
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
                 GridLayout:
                     size_hint_x: None
                     width: 375
@@ -72,7 +60,7 @@
                         halign: "left"
                         size_hint: None, None
                         width: 300
-                        height: 30
+                        height: 35
                         text: 'Zahlengenerator'
                         font_size: 20
                         bold: True
@@ -139,7 +127,7 @@
                         halign: "left"
                         size_hint: None, None
                         width: 300
-                        height: 30
+                        height: 35
                         text: 'Animation'
                         font_size: 20
                         bold: True
@@ -215,7 +203,7 @@
                         halign: "left"
                         size_hint: None, None
                         width: 300
-                        height: 30
+                        height: 35
                         text: 'Diagrammfarben'
                         font_size: 20
                         bold: True
@@ -375,7 +363,7 @@
                         halign: "left"
                         size_hint: None, None
                         width: 300
-                        height: 30
+                        height: 35
                         text: 'Sortierungsverfahren'
                         font_size: 20
                         bold: True
@@ -397,61 +385,56 @@
                 width: self.width
 
     TabbedPanelItem:
-        text: 'Visualisierer'
+        text: 'VISUALISIERER'
         GridLayout
             cols: 1
             rows: 3
-            BoxLayout
-                size_hint_y: None
-                height: 50
-                padding: 2, 1, 2 ,1
-                spacing: 1
-                canvas:
-                    Color:
-                        rgb: .15, .15, .15
-                    Rectangle:
-                        size: self.size
-                        pos: self.pos
-                    Color:
-                        rgba: .12, .12, .12, .9
-                    Rectangle:
-                        size: (self.width, 2)
-                        pos: (0, self.y)
+            HeaderBar
 
                 Button
-                    id: load_bttn
-                    size_hint_x: None
                     width: 150
+                    size_hint_x: None
+                    background_normal: "res/bttn_normal.png"
+                    background_disabled_normal: "res/bttn_pressed.png"
+                    background_down: "res/bttn_pressed.png"
+                    background_disabled_down: "res/bttn_pressed.png"
+                    id: load_bttn
                     text: 'Laden'
                     on_press: root.load_on_press()
 
                 Button
-                    id: start_bttn
-                    size_hint_x: None
                     width: 150
+                    size_hint_x: None
+                    background_normal: "res/bttn_normal.png"
+                    background_disabled_normal: "res/bttn_pressed.png"
+                    background_down: "res/bttn_pressed.png"
+                    background_disabled_down: "res/bttn_pressed.png"
+                    id: start_bttn
                     text: 'Start'
                     on_press: root.start_on_press()
                     disabled: True
 
                 Button
-                    id: stop_bttn
-                    size_hint_x: None
                     width: 150
+                    size_hint_x: None
+                    background_normal: "res/bttn_normal.png"
+                    background_disabled_normal: "res/bttn_pressed.png"
+                    background_down: "res/bttn_pressed.png"
+                    background_disabled_down: "res/bttn_pressed.png"
+                    id: stop_bttn
                     text: 'Stop'
                     on_press: root.stop_on_press()
                     disabled: True
 
-                Button
+                ActionButton
                     id: previous_bttn
-                    size_hint_x: None
                     width: 50
                     text: '<'
                     on_press: root.previous_on_press()
                     disabled: True
 
-                Button
+                ActionButton
                     id: next_bttn
-                    size_hint_x: None
                     width: 50
                     text: '>'
                     on_press: root.next_on_press()
@@ -471,3 +454,41 @@
 
             InfoLayout
                 width: self.width
+
+<ToggleButton>
+    background_normal: "res/bttn_pressed.png"
+    background_down: "res/tab_selected.png"
+
+<ActionButton@Button>
+    size_hint_x: None
+    background_normal: "res/bttn_normal.png"
+    background_disabled_normal: "res/bttn_pressed.png"
+    background_down: "res/bttn_pressed.png"
+    background_disabled_down: "res/bttn_pressed.png"
+
+<HeaderBar@BoxLayout>
+    size_hint_y: None
+    height: 50
+    padding: 2, 1, 2 ,1
+    spacing: 1
+    canvas:
+        Color:
+            rgba: 23/255, 29/255, 37/255, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: 47/255, 54/255, 65/255, 1
+        Rectangle:
+            size: (self.width, 2)
+            pos: (0, self.y)
+
+<TabbedPanelHeader>
+    background_normal: "res/bttn_normal.png"
+    background_down: "res/tab_selected.png"
+    bold: True
+
+<TextInput>
+    foreground_color: 1, 1, 1, 1
+    background_color: (70/255, 77/255, 88/255, 1)
+    cursor_color: 1, 1, 1, 1

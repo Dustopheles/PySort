@@ -60,5 +60,5 @@ class NumberLabel(Label):
         if len(self.text) > 2:
             size = min(self.height*0.9, self.width*0.9 / len(self.text))
             return size
-        size = min(self.height*0.8, self.width*0.8)
+        size = min(self.height*0.7, self.width*0.7)
         return size

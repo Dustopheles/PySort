@@ -4,32 +4,47 @@ import platform
 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
-from kivy.graphics import Color, Rectangle
+from kivy.graphics import Color, Rectangle, SmoothEllipse
+from kivy.uix.image import Image
 
 class InfoLayout(BoxLayout):
     """Info layout widget class."""
     def __init__(self, **kwargs):
         super(InfoLayout, self).__init__(**kwargs)
         self.size_hint_y = None
-        self.height = 25
-        self.padding = (5,0,10,2)
-        self.spacing = 1
+        self.height = 50
+        self.padding = (13,0,13,1)
+        self.spacing = 4
+        self.on_load()
+
+
+    def on_load(self) -> None:
+        """On load event."""
         self.draw_canvas()
+        self.add_widget(Image(source='res/sbsz.png',
+                        fit_mode='scale-down',
+                        width=45,
+                        size_hint_x=None,
+                        color=(1,1,1,1)))
         self.add_label("SBSZ - Hermsdorf Projekt 2024")
         self.add_widget(Label(width=self.width))
         self.add_label(f"Python {platform.python_version()}")
         self.add_label(f"{platform.system()}")
-        print(self.children[0].pos)
 
     def draw_canvas(self) -> None:
         """Draw widget canvas."""
         with self.canvas:
-            self.canvas_color = Color(.15, .15, .15, 1)
+            # pylint: disable=W0201:attribute-defined-outsite-init
+            self.canvas_color = Color(23/255, 29/255, 37/255, 1)
             self.rect = Rectangle(pos=self.pos,
                                   size=self.size)
-            self.canvas_color = Color(.12, .12, .12, .9)
+            self.canvas_color = Color(47/255, 54/255, 65/255, 1)
             self.liner = Rectangle(pos=(0, self.y + self.height),
-                                   size=(self.width, 2))
+                                   size=(self.width, 1))
+            self.canvas_color = Color(1, 1, 1, 1)
+            SmoothEllipse(pos=(8, self.y+5),
+                          size=(self.height-8, self.height-8))
+
         self.canvas.ask_update()
 
         # pylint: disable=no-member
@@ -40,6 +55,7 @@ class InfoLayout(BoxLayout):
         """Add info label"""
         label = Label(size_hint_x=None,
                       text=text,
+                      color=(154/255, 162/255, 171/255, 1),
                       width=len(text)*8)
 
         self.add_widget(label)
