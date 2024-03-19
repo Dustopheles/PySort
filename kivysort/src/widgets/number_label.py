@@ -3,6 +3,11 @@
 from kivy.uix.label import Label
 from kivy.graphics import Color, Rectangle
 
+try:
+    from src.configs.color_config import ColorConfig as Colors
+except ImportError as i_err:
+    print(i_err)
+
 class NumberLabel(Label):
     """NumberLabel class."""
     def __init__(self, root, **kwargs):
@@ -22,7 +27,9 @@ class NumberLabel(Label):
             self.rect = Rectangle(pos=self.pos, size=self.size)
             self.label = Label(text=self.text,
                                pos=(self.x, self.y + self.height/2),
-                               size=(self.width, 1))
+                               size=(self.width, 1),
+                               color=Colors.text,
+                               font_size=self.get_font_size())
         self.canvas.ask_update()
 
         # pylint: disable=no-member
@@ -46,3 +53,12 @@ class NumberLabel(Label):
         self.label.pos = self.pos
         self.label.size = self.size
         self.label.text = self.text
+        self.label.font_size = self.get_font_size()
+
+    def get_font_size(self) -> float:
+        """Return adjusted text size in relation to text length and widget size."""
+        if len(self.text) > 2:
+            size = min(self.height*0.9, self.width*0.9 / len(self.text))
+            return size
+        size = min(self.height*0.8, self.width*0.8)
+        return size

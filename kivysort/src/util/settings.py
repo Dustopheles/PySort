@@ -15,10 +15,15 @@ class Settings():
     def __init__(self, ids) -> None:
         self.ids = ids
         self.color_widget = None
+        self.bind_colors()
+
+    def bind_colors(self) -> None:
+        """Bind color buttons."""
         self.ids["passive_color"].bind(on_press=self.create_popup)
         self.ids["active_color"].bind(on_press=self.create_popup)
         self.ids["switch_color"].bind(on_press=self.create_popup)
         self.ids["sorted_color"].bind(on_press=self.create_popup)
+        self.ids["text_color"].bind(on_press=self.create_popup)
 
     def update_settings_inputs(self) -> None:
         """Update settings TextInputs."""
@@ -44,6 +49,7 @@ class Settings():
         self.ids['active_color'].background_color = Colors.active
         self.ids['switch_color'].background_color = Colors.switch
         self.ids['sorted_color'].background_color = Colors.sorted
+        self.ids['text_color'].background_color = Colors.text
 
     def save_settings(self) -> None:
         """Save settings to dicts."""
@@ -78,11 +84,13 @@ class Settings():
         c_active = self.ids['active_color'].background_color
         c_switch = self.ids['switch_color'].background_color
         c_sorted = self.ids['sorted_color'].background_color
+        c_text = self.ids['text_color'].background_color
 
         Colors.save_values(color_passive=c_passive,
                            color_active=c_active,
                            color_switch=c_switch,
-                           color_sorted=c_sorted)
+                           color_sorted=c_sorted,
+                           color_text=c_text)
 
     def reset_settings(self) -> None:
         """Reset settings to fallback values."""

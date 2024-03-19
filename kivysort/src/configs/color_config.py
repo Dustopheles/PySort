@@ -12,6 +12,7 @@ class ColorConfig():
     active = (180/255, 180/255, 180/255, 0.9)
     switch = (1.0, 165/255, 0.0, 0.9)
     sorted = (60/255, 179/255, 113/255, 0.9)
+    text = (1, 1, 1, 1)
 
     @staticmethod
     def fixed(list_str: str) -> list:
@@ -34,11 +35,13 @@ class ColorConfig():
             rgba_active = Config.config.get(ColorConfig.section, 'color_active')
             rgba_switch = Config.config.get(ColorConfig.section, 'color_switch')
             rgba_sorted = Config.config.get(ColorConfig.section, 'color_sorted')
+            rgba_text = Config.config.get(ColorConfig.section, 'color_text')
 
             ColorConfig.passive = ColorConfig.fixed(rgba_passive)
             ColorConfig.active = ColorConfig.fixed(rgba_active)
             ColorConfig.switch = ColorConfig.fixed(rgba_switch)
             ColorConfig.sorted = ColorConfig.fixed(rgba_sorted)
+            ColorConfig.text = ColorConfig.fixed(rgba_text)
 
         except Exception as p_err:
             print(p_err)
@@ -63,6 +66,7 @@ class ColorConfig():
         ColorConfig.active = kwargs['color_active']
         ColorConfig.switch = kwargs['color_switch']
         ColorConfig.sorted = kwargs['color_sorted']
+        ColorConfig.text = kwargs['color_text']
 
     @staticmethod
     def save_values_to_file(**kwargs):
@@ -81,3 +85,4 @@ class ColorConfig():
         ColorConfig.active = (180/255, 180/255, 180/255, 0.9)
         ColorConfig.switch = (1.0, 165/255, 0.0, 0.9)
         ColorConfig.sorted = (60/255, 179/255, 113/255, 0.9)
+        ColorConfig.text = (1, 1, 1, 1)
