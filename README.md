@@ -7,7 +7,7 @@ PySort
 
 PySort ist ein [Python](https://python.org) Projekt der Fachinformatiker für Anwendungsentwicklung FI21-1 des [SBSZ - Hermsdorf](https://sbsz-hsp.de/schulteil-hermsdorf).
 
-Das Ziel des Projekts ist eine Visulisierung verschiedener Sortierverfahren.
+Das Ziel des Projekts ist eine Visualisierung verschiedener Sortierverfahren.
 
 Als GUI Framework wird [kivy](https://kivy.org/) genutzt.
 
