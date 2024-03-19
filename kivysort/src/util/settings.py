@@ -19,6 +19,7 @@ class Settings():
 
     def bind_colors(self) -> None:
         """Bind color buttons."""
+        self.ids["background_color"].bind(on_press=self.create_popup)
         self.ids["passive_color"].bind(on_press=self.create_popup)
         self.ids["active_color"].bind(on_press=self.create_popup)
         self.ids["switch_color"].bind(on_press=self.create_popup)
@@ -45,11 +46,18 @@ class Settings():
 
     def update_colors(self) -> None:
         """Update animation duration input fields."""
+        self.ids['background_color'].background_color = Colors.background
         self.ids['passive_color'].background_color = Colors.passive
         self.ids['active_color'].background_color = Colors.active
         self.ids['switch_color'].background_color = Colors.switch
         self.ids['sorted_color'].background_color = Colors.sorted
         self.ids['text_color'].background_color = Colors.text
+
+        self.update_widget_colors()
+
+    def update_widget_colors(self) -> None:
+        """Update colors of widgets where no binding is available."""
+        self.ids["bars"].redraw_rectangle()
 
     def save_settings(self) -> None:
         """Save settings to dicts."""
@@ -80,13 +88,15 @@ class Settings():
 
     def save_colors(self) -> None:
         """Save widget color settings to class."""
+        c_background = self.ids['background_color'].background_color
         c_passive = self.ids['passive_color'].background_color
         c_active = self.ids['active_color'].background_color
         c_switch = self.ids['switch_color'].background_color
         c_sorted = self.ids['sorted_color'].background_color
         c_text = self.ids['text_color'].background_color
 
-        Colors.save_values(color_passive=c_passive,
+        Colors.save_values(color_background=c_background,
+                           color_passive=c_passive,
                            color_active=c_active,
                            color_switch=c_switch,
                            color_sorted=c_sorted,

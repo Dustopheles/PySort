@@ -1,10 +1,12 @@
 """Bar layout widget."""
 
 from kivy.uix.floatlayout import FloatLayout
+from kivy.graphics import Rectangle, Color
 
 try:
     from src.widgets.bar_widget import BarWidget
     from src.configs.generator_config import GeneratorConfig as Generator
+    from src.configs.color_config import ColorConfig as Colors
 except ImportError as i_err:
     print(i_err)
 
@@ -18,6 +20,7 @@ class BarLayout(FloatLayout):
         self.sort_obj = None
         # pylint: disable=no-member
         self.bind(size=self.resize_bars)
+        self.redraw_rectangle()
 
     def calc_bar_layout(self) -> tuple:
         """Calculate bar layout size."""
@@ -65,3 +68,21 @@ class BarLayout(FloatLayout):
         bar_widget = BarWidget(x=x, height=height, width=width, text=str(number))
         self.add_widget(bar_widget)
         return bar_widget
+
+    def redraw_rectangle(self) -> None:
+        """Redraw and bind canvas rectangle with input rgba."""
+        r, g, b, a = Colors.background
+        self.canvas.clear()
+        with self.canvas:
+            self.canvas_color = Color(r, g, b, a)
+            self.rect = Rectangle(pos=self.pos, size=self.size)
+        self.canvas.ask_update()
+
+        # pylint: disable=no-member
+        self.bind(pos=self.update_rect)
+        self.bind(size=self.update_rect)
+
+    def update_rect(self, *_args):
+        """Position and size binding for canvas rectangle."""
+        self.rect.pos = self.pos
+        self.rect.size = self.size

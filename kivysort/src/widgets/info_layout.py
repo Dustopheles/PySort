@@ -41,7 +41,7 @@ class InfoLayout(BoxLayout):
         label = Label(size_hint_x=None,
                       text=text,
                       width=len(text)*8)
-        
+
         self.add_widget(label)
 
     def update_rect(self, *_args):

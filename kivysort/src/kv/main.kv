@@ -222,13 +222,35 @@
 
                     GridLayout
                         cols: 2
-                        rows: 5
+                        rows: 6
                         padding: 5, 5, 5, 5
                         size_hint_y: None
                         col_default_width: 50
                         row_default_height: 40
                         spacing: 5, 1
                         height: 150
+                        Label
+                            text_size: self.size
+                            padding: 15, 0, 0, 0
+                            valign: "center"
+                            halign: "left"
+                            size_hint: None, None
+                            width: 150
+                            height: 30
+                            text: 'Hintergrund'
+                        Button
+                            id: background_color
+                            background_normal: ''
+                            size_hint: None, None
+                            height: 30
+                            width: 30
+                            canvas.before:
+                                Color:
+                                    rgba: .5, .5, .5, 1
+                                Line:
+                                    width: 2
+                                    rectangle: self.x, self.y, self.width, self.height
+
                         Label
                             text_size: self.size
                             padding: 15, 0, 0, 0

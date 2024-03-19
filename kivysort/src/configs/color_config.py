@@ -8,6 +8,7 @@ except ImportError as i_err:
 class ColorConfig():
     """Color config class."""
     section = "Color"
+    background = (.2, .2, .2, 1)
     passive = (90/255, 90/255, 90/255, 0.9)
     active = (180/255, 180/255, 180/255, 0.9)
     switch = (1.0, 165/255, 0.0, 0.9)
@@ -31,12 +32,14 @@ class ColorConfig():
             return
 
         try:
+            rgba_background = Config.config.get(ColorConfig.section, 'color_background')
             rgba_passive = Config.config.get(ColorConfig.section, 'color_passive')
             rgba_active = Config.config.get(ColorConfig.section, 'color_active')
             rgba_switch = Config.config.get(ColorConfig.section, 'color_switch')
             rgba_sorted = Config.config.get(ColorConfig.section, 'color_sorted')
             rgba_text = Config.config.get(ColorConfig.section, 'color_text')
 
+            ColorConfig.background = ColorConfig.fixed(rgba_background)
             ColorConfig.passive = ColorConfig.fixed(rgba_passive)
             ColorConfig.active = ColorConfig.fixed(rgba_active)
             ColorConfig.switch = ColorConfig.fixed(rgba_switch)
@@ -61,7 +64,7 @@ class ColorConfig():
         for value in kwargs.values():
             if not isinstance(value, list):
                 return
-
+        ColorConfig.background = kwargs['color_background']
         ColorConfig.passive = kwargs['color_passive']
         ColorConfig.active = kwargs['color_active']
         ColorConfig.switch = kwargs['color_switch']
@@ -81,6 +84,7 @@ class ColorConfig():
     @staticmethod
     def reset() -> None:
         """Reset values to fallback"""
+        ColorConfig.background = (.2, .2, .2, 1)
         ColorConfig.passive = (90/255, 90/255, 90/255, 0.9)
         ColorConfig.active = (180/255, 180/255, 180/255, 0.9)
         ColorConfig.switch = (1.0, 165/255, 0.0, 0.9)
