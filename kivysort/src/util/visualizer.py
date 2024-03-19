@@ -60,9 +60,13 @@ class Visualizer():
         if not self.sort_obj.events:
             self.sort_obj.sort()
             return
+
         self.correct_zero()
+        self.correct_indexes()
 
         ident = self.sort_obj.compare_counter + self.sort_obj.switch_counter
+        print(f"Call: Com: {self.sort_obj.compare_counter}")
+        print(f"Call: Swi: {self.sort_obj.switch_counter}\n")
         for i in range(ident, len(self.sort_obj.events)-1):
             timeout = self.sort_obj.event_times[i] - self.sort_obj.event_times[ident]
             self.sort_obj.events[i].timeout = timeout
@@ -78,11 +82,18 @@ class Visualizer():
         self.switch_id = self.sort_obj.switch_counter
 
     def correct_zero(self) -> None:
-        """Correct index."""
+        """Correct indexex when previous step would hit index 0."""
         if self.comp_id <= 0:
             self.sort_obj.compare_counter = 0
         if self.switch_id <= 0:
             self.sort_obj.switch_counter = 0
+
+    def correct_indexes(self) -> None:
+        """Sync local and object counters."""
+        if self.comp_id != self.sort_obj.compare_counter:
+            self.sort_obj.compare_counter -= 1
+        if self.switch_id != self.sort_obj.switch_counter:
+            self.sort_obj.switch_counter -= 1
 
     def previous(self):
         """Go to previous animation step."""
@@ -111,14 +122,14 @@ class Visualizer():
 
     def next(self):
         """Go to next animation step."""
-        print(f"NPre: {self.sort_obj.compare_counter}")
-        print(f"NPre: {self.sort_obj.switch_counter}")
         if not self.sort_obj:
             return
 
         self.correct_zero()
+        self.correct_indexes()
+
         index = self.sort_obj.compare_counter + self.sort_obj.switch_counter
-        if index >= len(self.sort_obj.events) - 1:
+        if index >= len(self.sort_obj.events):
             return
         event = self.sort_obj.events[index]
         event.timeout = 0.1
@@ -127,6 +138,6 @@ class Visualizer():
         if name == "switch_bars":
             self.comp_id = self.sort_obj.compare_counter
             self.switch_id = self.sort_obj.switch_counter + 1
-        else:
+        elif name == "highlight_bars":
             self.comp_id = self.sort_obj.compare_counter + 1
             self.switch_id = self.sort_obj.switch_counter

@@ -36,19 +36,19 @@ class NumberLabel(Label):
         self.bind(pos=self.update_self)
         self.bind(size=self.update_self)
 
-    def update_self(self, *_args):
+    def update_self(self, *_args) -> None:
         """Update pos/size of widget."""
         self.pos = (self.root.x, self.root.y - 35)
         self.size = self.root.width, self.height
         self.update_canvas()
 
-    def update_canvas(self, *_args):
+    def update_canvas(self, *_args) -> None:
         """Update pos/size or canvas."""
         self.rect.pos = self.pos
         self.rect.size = self.size
         self.update_label()
 
-    def update_label(self, *_args):
+    def update_label(self, *_args) -> None:
         """Updaze pos/size/text of label"""
         self.label.pos = self.pos
         self.label.size = self.size
