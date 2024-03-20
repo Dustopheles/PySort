@@ -34,7 +34,7 @@ class InfoLayout(BoxLayout):
     def draw_canvas(self) -> None:
         """Draw widget canvas."""
         with self.canvas:
-            # pylint: disable=W0201:attribute-defined-outsite-init
+            # pylint: disable=all
             self.canvas_color = Color(23/255, 29/255, 37/255, 1)
             self.rect = Rectangle(pos=self.pos,
                                   size=self.size)

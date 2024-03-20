@@ -6,7 +6,8 @@ import sys
 from kivy.app import App
 from kivy.config import Config
 from kivy.lang import Builder
-from kivy.resources import resource_add_path
+# pylint: disable=unused-import
+from kivy.resources import resource_add_path, resource_find
 
 from src.widgets.main_widget import MainWidget
 
