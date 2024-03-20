@@ -43,7 +43,7 @@ class InfoLayout(BoxLayout):
                                    size=(self.width, 1))
             self.canvas_color = Color(1, 1, 1, 1)
             SmoothEllipse(pos=(8, self.y+5),
-                          size=(self.height-8, self.height-8))
+                          size=(self.height-10, self.height-10))
 
         self.canvas.ask_update()
 
