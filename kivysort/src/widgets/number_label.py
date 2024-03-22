@@ -4,7 +4,7 @@ from kivy.uix.label import Label
 from kivy.graphics import Color, Rectangle
 
 try:
-    from src.configs.color_config import ColorConfig as Colors
+    from src.configs.color_config import ColorConfig
 except ImportError as i_err:
     print(i_err)
 
@@ -22,13 +22,14 @@ class NumberLabel(Label):
         """Redraw and bind canvas rectangle with input rgba."""
         r, g, b, a = rgba
         self.canvas.clear()
+        config = ColorConfig()
         with self.canvas:
             self.canvas_color = Color(r, g, b, a)
             self.rect = Rectangle(pos=self.pos, size=self.size)
             self.label = Label(text=self.text,
                                pos=(self.x, self.y + self.height/2),
                                size=(self.width, 1),
-                               color=Colors.text,
+                               color=config.color_text,
                                font_size=self.get_font_size())
         self.canvas.ask_update()
 

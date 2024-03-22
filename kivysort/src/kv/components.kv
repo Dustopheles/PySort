@@ -1,0 +1,111 @@
+#: import InfoLayout src.widgets.info_layout.InfoLayout
+#: import FloatInput src.widgets.float_input.FloatInput
+#: import IntInput src.widgets.int_input.IntInput
+#: import BarLayout src.widgets.bar_layout.BarLayout
+
+<HeaderLabel@Label>
+    size_hint_y: None
+    text_size: self.size
+    padding: 0, 0, 0, 0
+    valign: "center"
+    halign: "left"
+    size_hint: None, None
+    width: 300
+    height: 35
+    bold: True
+    font_size: 20
+
+<SettingsGrid@GridLayout>
+    cols: 2
+    rows: 1
+    padding: 0, 15, 0, 15
+    size_hint_y: None
+    size_hint_x: None
+    width: 600
+    height: 60
+    canvas:
+        Color:
+            rgba: 70/255, 77/255, 88/255, 1
+        Rectangle:
+            pos: self.x, self.y
+            size: self.width, 2
+
+<SettingLabel@Label>
+    size_hint_x: None
+    text_size: self.size
+    valign: "center"
+    halign: "left"
+    width: 250
+
+<ToggleButton>
+    background_normal: "res/bttn_pressed.png"
+    background_down: "res/tab_selected.png"
+
+<SettingsToggleButton@ToggleButton>
+    size_hint_y: None
+    height: 40
+    background_normal: "res/toggle_normal.png"
+    background_down: "res/toggle_selected.png"
+    halign: "left"
+    valign: "center"
+    text_size: 120, None
+
+<EventButton@Button>
+    size_hint_x: None
+    background_normal: "res/bttn_normal.png"
+    background_disabled_normal: "res/bttn_pressed.png"
+    background_down: "res/bttn_pressed.png"
+    background_disabled_down: "res/bttn_pressed.png"
+
+<ActionButton@Button>
+    size_hint_x: None
+    background_normal: "res/bttn_normal.png"
+    background_disabled_normal: "res/bttn_pressed.png"
+    background_down: "res/bttn_pressed.png"
+    background_disabled_down: "res/bttn_pressed.png"
+
+<Button>
+    background_normal: "res/bttn_normal.png"
+    background_disabled_normal: "res/bttn_pressed.png"
+    background_down: "res/bttn_pressed.png"
+    background_disabled_down: "res/bttn_pressed.png"
+
+<HeaderBar@BoxLayout>
+    size_hint_y: None
+    height: 50
+    padding: 2, 1, 2 ,1
+    spacing: 1
+    canvas:
+        Color:
+            rgba: 23/255, 29/255, 37/255, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+        Color:
+            rgba: 47/255, 54/255, 65/255, 1
+        Rectangle:
+            size: (self.width, 2)
+            pos: (0, self.y)
+
+<TabbedPanelHeader>
+    background_normal: "res/bttn_normal.png"
+    background_down: "res/tab_selected.png"
+    bold: True
+
+<TextInput>
+    foreground_color: 1, 1, 1, 1
+    background_color: (70/255, 77/255, 88/255, 1)
+    cursor_color: 1, 1, 1, 1
+    multiline: False
+
+<ColorButton@Button>
+    background_normal: ''
+    size_hint: None, None
+    height: 30
+    width: 30
+    canvas.before:
+        Color:
+            rgba: .5, .5, .5, 1
+        Line:
+            width: 2
+            rectangle: self.x, self.y, self.width, self.height

@@ -4,7 +4,7 @@ from kivy.uix.button import Label
 from kivy.graphics import Color, Rectangle
 
 try:
-    from src.configs.color_config import ColorConfig as Colors
+    from src.configs.color_config import ColorConfig
     from src.widgets.number_label import NumberLabel
 except ImportError as i_err:
     print(i_err)
@@ -18,8 +18,8 @@ class BarWidget(Label):
         self.size = (kwargs["width"], kwargs["height"])
 
         self.text = kwargs["text"]
-        self.rgba = Colors.passive
-        self.redraw_rectangle(rgba=self.rgba)
+        self.colors = ColorConfig()
+        self.redraw_rectangle(rgba=self.colors.color_passive)
 
     def redraw_rectangle(self, rgba: list) -> None:
         """Redraw and bind canvas rectangle with input rgba."""

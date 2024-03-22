@@ -20,7 +20,7 @@ class MainWidget(TabbedPanel):
     def on_load(self):
         """Executed on widget creation.."""
         self.settings.update_settings_inputs()
-        self.visualizer.fill_grid()
+        self.visualizer.fill_spinner()
 
     def load_on_press(self):
         """Load button event."""

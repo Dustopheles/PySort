@@ -7,7 +7,7 @@ PySort
 
 PySort ist ein [Python](https://python.org) Projekt der Fachinformatiker für Anwendungsentwicklung FI21-1 des [SBSZ - Hermsdorf](https://sbsz-hsp.de/schulteil-hermsdorf).
 
-Das Ziel des Projekts ist eine Visualisierung verschiedener Sortierverfahren.
+Das Ziel des Projekts ist eine Visualisierung verschiedener Sortierverfahren, darunter Bubblesort, Minsort, Insertionsort und Shellsort.
 
 Als GUI Framework wird [kivy](https://kivy.org/) genutzt.
 
@@ -57,6 +57,7 @@ Sortierverfahren können als Module unter `./kivysort/sorting` eingebunden werde
 - Klassenname: `class {Sortiername}sort(Sort):`
 - Import: `from src.sorting.sort import Sort`
 - Attribut in Konstruktor: `self.sort_name = {Sortiername}`
+- Zuweisung vor der Sortierung: `i_list = self.numbers`
 - Zuweisung nach Sortierung: `self.sorted_numbers = i_list`
 - Verständnis zu Vergleichs- und Tauschschritten
 - Übergabe der Indexes mit Aktionstyp in `self.schedule_event(typ, index_1, index_2)`

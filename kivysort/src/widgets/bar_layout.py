@@ -5,8 +5,8 @@ from kivy.graphics import Rectangle, Color
 
 try:
     from src.widgets.bar_widget import BarWidget
-    from src.configs.generator_config import GeneratorConfig as Generator
-    from src.configs.color_config import ColorConfig as Colors
+    from src.configs.generator_config import GeneratorConfig
+    from src.configs.color_config import ColorConfig
 except ImportError as i_err:
     print(i_err)
 
@@ -26,7 +26,8 @@ class BarLayout(FloatLayout):
         """Calculate bar layout size."""
         x = 10
         root_width = self.width - len(self.numbers)*5 - x
-        width = max(int(root_width/Generator.members), 1)
+        numbers = GeneratorConfig()
+        width = max(int(root_width/numbers.numbers_length), 1)
         height = self.height - 80
         max_num = max(self.numbers)
         return width, height, max_num
@@ -71,7 +72,8 @@ class BarLayout(FloatLayout):
 
     def redraw_rectangle(self) -> None:
         """Redraw and bind canvas rectangle with input rgba."""
-        r, g, b, a = Colors.background
+        config = ColorConfig()
+        r, g, b, a = config.color_background
         self.canvas.clear()
         with self.canvas:
             self.canvas_color = Color(r, g, b, a)

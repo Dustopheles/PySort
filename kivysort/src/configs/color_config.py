@@ -1,92 +1,48 @@
 """Color config module."""
 
 try:
-    from src.configs.config import Config
+    from src.util.decorators import singleton
 except ImportError as i_err:
     print(i_err)
 
+
+@singleton
 class ColorConfig():
     """Color config class."""
-    section = "Color"
-    background = (36/255, 40/255, 47/255, 1)
-    passive = (70/255, 77/255, 88/255, 1)
-    active = (180/255, 180/255, 180/255, 0.9)
-    switch = (1.0, 165/255, 0.0, 0.9)
-    sorted = (60/255, 179/255, 113/255, 0.9)
-    text = (1, 1, 1, 1)
+    def __init__(self) -> None:
+        self.color_background = (36/255, 40/255, 47/255, 1)
+        self.color_passive = (70/255, 77/255, 88/255, 1)
+        self.color_active = (180/255, 180/255, 180/255, 0.9)
+        self.color_switch = (1.0, 165/255, 0.0, 0.9)
+        self.color_sorted = (60/255, 179/255, 113/255, 0.9)
+        self.color_text = (1, 1, 1, 1)
 
-    @staticmethod
-    def fixed(list_str: str) -> list:
-        """Fixes stringyfication of list and returns as list."""
-        list_str = list_str.strip('()[]')
-        list_str = list_str.replace(' ', '')
-        fixed_list = list_str.split(',')
-        fixed_list = [float(x) if x.count('.') == 1 else int(x) for x in fixed_list]
-        return fixed_list
-
-    @staticmethod
-    def load_values() -> None:
-        """Load config values from config parser."""
-        Config.read_config()
-        if not Config.config.items():
+    def set_values(self, **kwargs) -> None:
+        """Set object attributes."""
+        if not kwargs:
             return
-
-        try:
-            rgba_background = Config.config.get(ColorConfig.section, 'color_background')
-            rgba_passive = Config.config.get(ColorConfig.section, 'color_passive')
-            rgba_active = Config.config.get(ColorConfig.section, 'color_active')
-            rgba_switch = Config.config.get(ColorConfig.section, 'color_switch')
-            rgba_sorted = Config.config.get(ColorConfig.section, 'color_sorted')
-            rgba_text = Config.config.get(ColorConfig.section, 'color_text')
-
-            ColorConfig.background = ColorConfig.fixed(rgba_background)
-            ColorConfig.passive = ColorConfig.fixed(rgba_passive)
-            ColorConfig.active = ColorConfig.fixed(rgba_active)
-            ColorConfig.switch = ColorConfig.fixed(rgba_switch)
-            ColorConfig.sorted = ColorConfig.fixed(rgba_sorted)
-            ColorConfig.text = ColorConfig.fixed(rgba_text)
-
-        except Exception as p_err:
-            print(p_err)
-            ColorConfig.reset()
-
-    @staticmethod
-    def save_value(key: str, value: list) -> None:
-        """Save value to config."""
-        if not isinstance(value, list):
-            return
-        value = f"[{', '.join(list)}]"
-        Config.config.set(ColorConfig.section, key, value)
-
-    @staticmethod
-    def save_values(**kwargs) -> None:
-        """Save values to class."""
         for value in kwargs.values():
             if not isinstance(value, list):
                 return
-        ColorConfig.background = kwargs['color_background']
-        ColorConfig.passive = kwargs['color_passive']
-        ColorConfig.active = kwargs['color_active']
-        ColorConfig.switch = kwargs['color_switch']
-        ColorConfig.sorted = kwargs['color_sorted']
-        ColorConfig.text = kwargs['color_text']
 
-    @staticmethod
-    def save_values_to_file(**kwargs):
-        """Save values to config file."""
-        for key, value in kwargs.items():
-            if not isinstance(value, list):
-                continue
-            value = f"[{', '.join(list)}]"
-            Config.config.set(ColorConfig.section, key, value)
-        Config.write_config()
+        self.color_background = kwargs['color_background']
+        self.color_passive = kwargs['color_passive']
+        self.color_active = kwargs['color_active']
+        self.color_switch = kwargs['color_switch']
+        self.color_sorted = kwargs['color_sorted']
+        self.color_text = kwargs['color_text']
 
-    @staticmethod
-    def reset() -> None:
+    def get_values(self) -> dict:
+        """Return object attributes as dictionary."""
+        ret_dict = vars(self)
+        return ret_dict
+
+    def reset(self) -> None:
         """Reset values to fallback"""
-        ColorConfig.background = (36/255, 40/255, 47/255, 1)
-        ColorConfig.passive = (70/255, 77/255, 88/255, 1)
-        ColorConfig.active = (180/255, 180/255, 180/255, 0.9)
-        ColorConfig.switch = (1.0, 165/255, 0.0, 0.9)
-        ColorConfig.sorted = (60/255, 179/255, 113/255, 0.9)
-        ColorConfig.text = (1, 1, 1, 1)
+        self.color_background = (36/255, 40/255, 47/255, 1)
+        self.color_passive = (70/255, 77/255, 88/255, 1)
+        self.color_active = (180/255, 180/255, 180/255, 0.9)
+        self.color_switch = (1.0, 165/255, 0.0, 0.9)
+        self.color_sorted = (60/255, 179/255, 113/255, 0.9)
+        self.color_text = (1, 1, 1, 1)
+       

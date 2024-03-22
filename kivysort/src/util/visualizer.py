@@ -2,10 +2,8 @@
 
 import random
 
-from kivy.uix.togglebutton import ToggleButton
-
 try:
-    from src.configs.generator_config import GeneratorConfig as Generator
+    from src.configs.generator_config import GeneratorConfig
     from src.sorting.sort_handler import SortHandler
 except ImportError as i_err:
     print(i_err)
@@ -13,31 +11,29 @@ except ImportError as i_err:
 class Visualizer():
     """Visualizer class."""
     def __init__(self, ids) -> None:
+        self.numbers = GeneratorConfig()
         self.ids = ids
         self.sort_name = "Bubblesort"
         self.sort_obj = None
         self.comp_id = 0
         self.switch_id = 0
+        self.ids["sort_spinner"].bind(text=self.change_sort)
 
-    def fill_grid(self) -> None:
-        """Fill choice grid with choices."""
-        for choice in SortHandler.available_sorts():
-            bttn = ToggleButton(text=choice, size_hint=(None, None),
-                                height=50, width=200, group='sort')
-            # pylint: disable=no-member
-            bttn.bind(on_press=self.change_sort)
-            self.ids['choice_grid'].add_widget(bttn)
+    def fill_spinner(self) -> None:
+        """Fill sort spinner values with sort choices."""
+        self.ids["sort_spinner"].values = SortHandler.available_sorts()
 
-    def change_sort(self, widget) -> None:
+    def change_sort(self, _widget, text: str) -> None:
         """Change sort type."""
-        self.sort_name = widget.text
+        self.sort_name = text
+        self.load()
 
     def load(self):
         """Generate random number."""
         numbers = []
-        for _i in range(Generator.members):
-            numbers.append(random.randint(Generator.lower_limit,
-                                          Generator.upper_limit))
+        for _i in range(self.numbers.numbers_length):
+            numbers.append(random.randint(self.numbers.numbers_lower_limit,
+                                          self.numbers.numbers_upper_limit))
 
         self.ids["bars"].numbers = numbers
         self.ids["bars"].clear_bars()
@@ -49,7 +45,7 @@ class Visualizer():
                                              static_x=self.ids["bars"].static_x)
 
         self.ids["bars"].sort_obj = self.sort_obj
-        self.ids['sort_label'].text = self.sort_obj.sort_name
+        self.ids["sort_spinner"].text = self.sort_obj.sort_name
 
     def start(self):
         """Start sorting animation."""
@@ -65,7 +61,7 @@ class Visualizer():
         self.correct_indexes()
 
         ident = self.sort_obj.compare_counter + self.sort_obj.switch_counter
-        for i in range(ident, len(self.sort_obj.events)-1):
+        for i in range(ident, len(self.sort_obj.events)):
             timeout = self.sort_obj.event_times[i] - self.sort_obj.event_times[ident]
             self.sort_obj.events[i].timeout = timeout
             self.sort_obj.events[i]()
@@ -81,9 +77,9 @@ class Visualizer():
 
     def correct_zero(self) -> None:
         """Correct indexex when previous step would hit index 0."""
-        if self.comp_id <= 0:
+        if self.comp_id <= 0 or self.sort_obj.compare_counter < 0:
             self.sort_obj.compare_counter = 0
-        if self.switch_id <= 0:
+        if self.switch_id <= 0 or self.sort_obj.switch_counter < 0:
             self.sort_obj.switch_counter = 0
 
     def correct_indexes(self) -> None:
@@ -97,6 +93,11 @@ class Visualizer():
         """Go to previous animation step."""
         if not self.sort_obj:
             return
+
+        if not self.sort_obj.events:
+            return
+
+        self.correct_zero()
 
         index = self.comp_id + self.switch_id - 1
         if index < 0:
@@ -121,6 +122,9 @@ class Visualizer():
     def next(self):
         """Go to next animation step."""
         if not self.sort_obj:
+            return
+
+        if not self.sort_obj.events:
             return
 
         self.correct_zero()

@@ -4,27 +4,27 @@ from kivy.uix.popup import Popup
 from kivy.uix.colorpicker import ColorPicker
 
 try:
-    from src.configs.generator_config import GeneratorConfig as Generator
-    from src.configs.animation_config import AnimationConfig as Durations
-    from src.configs.color_config import ColorConfig as Colors
+    from src.configs.generator_config import GeneratorConfig
+    from src.configs.animation_config import AnimationConfig
+    from src.configs.color_config import ColorConfig
 except ImportError as i_err:
     print(i_err)
 
 class Settings():
     """Settings class."""
     def __init__(self, ids) -> None:
+        self.numbers = GeneratorConfig()
+        self.colors = ColorConfig()
+        self.durations = AnimationConfig()
         self.ids = ids
         self.color_widget = None
         self.bind_colors()
 
     def bind_colors(self) -> None:
         """Bind color buttons."""
-        self.ids["background_color"].bind(on_press=self.create_popup)
-        self.ids["passive_color"].bind(on_press=self.create_popup)
-        self.ids["active_color"].bind(on_press=self.create_popup)
-        self.ids["switch_color"].bind(on_press=self.create_popup)
-        self.ids["sorted_color"].bind(on_press=self.create_popup)
-        self.ids["text_color"].bind(on_press=self.create_popup)
+        for key, value in self.ids.items():
+            if "color_" in key:
+                value.bind(on_press=self.create_popup)
 
     def update_settings_inputs(self) -> None:
         """Update settings TextInputs."""
@@ -34,25 +34,24 @@ class Settings():
 
     def update_generator(self) -> None:
         """Update number generator input fields."""
-        self.ids['members'].text = str(Generator.members)
-        self.ids['lower_limit'].text = str(Generator.lower_limit)
-        self.ids['upper_limit'].text = str(Generator.upper_limit)
+        numbers = vars(self.numbers)
+        for key, value in self.ids.items():
+            if "numbers_" in key:
+                value.text = str(numbers[key])
 
     def update_durations(self) -> None:
         """Update animation duration input fields."""
-        self.ids['switch_duration'].text = str(Durations.switch)
-        self.ids['pause_duration'].text = str(Durations.pause)
-        self.ids['compare_duration'].text = str(Durations.compare)
+        durations = vars(self.durations)
+        for key, value in self.ids.items():
+            if "duration_" in key:
+                value.text = str(durations[key])
 
     def update_colors(self) -> None:
         """Update animation duration input fields."""
-        self.ids['background_color'].background_color = Colors.background
-        self.ids['passive_color'].background_color = Colors.passive
-        self.ids['active_color'].background_color = Colors.active
-        self.ids['switch_color'].background_color = Colors.switch
-        self.ids['sorted_color'].background_color = Colors.sorted
-        self.ids['text_color'].background_color = Colors.text
-
+        colors = vars(self.colors)
+        for key, value in self.ids.items():
+            if "color_" in key:
+                value.background_color = colors[key]
         self.update_widget_colors()
 
     def update_widget_colors(self) -> None:
@@ -68,45 +67,35 @@ class Settings():
 
     def save_generator(self) -> None:
         """Save number generator settings to class."""
-        members = int(self.ids['members'].text)
-        lower_limit = int(self.ids['lower_limit'].text)
-        upper_limit = int(self.ids['upper_limit'].text)
-
-        Generator.save_values(members=members,
-                              lower_limit=lower_limit,
-                              upper_limit=upper_limit)
+        numbers_kwargs = {}
+        for key, value in self.ids.items():
+            if "numbers_" in key:
+                numbers_kwargs[key] = int(value.text)
+        self.numbers.set_values(**numbers_kwargs)
 
     def save_durations(self) -> None:
         """Save animation duration settings to class."""
-        compare = float(self.ids['compare_duration'].text)
-        switch = float(self.ids['switch_duration'].text)
-        pause = float(self.ids['pause_duration'].text)
+        duration_kwargs = {}
+        for key, value in self.ids.items():
+            if "duration_" in key:
+                duration_kwargs[key] = float(value.text)
 
-        Durations.save_values(compare_duration=compare,
-                              switch_duration=switch,
-                              pause_duration=pause)
+        self.durations.set_values(**duration_kwargs)
 
     def save_colors(self) -> None:
         """Save widget color settings to class."""
-        c_background = self.ids['background_color'].background_color
-        c_passive = self.ids['passive_color'].background_color
-        c_active = self.ids['active_color'].background_color
-        c_switch = self.ids['switch_color'].background_color
-        c_sorted = self.ids['sorted_color'].background_color
-        c_text = self.ids['text_color'].background_color
+        color_kwargs = {}
+        for key, value in self.ids.items():
+            if "color_" in key:
+                color_kwargs[key] = value.background_color
 
-        Colors.save_values(color_background=c_background,
-                           color_passive=c_passive,
-                           color_active=c_active,
-                           color_switch=c_switch,
-                           color_sorted=c_sorted,
-                           color_text=c_text)
+        self.colors.set_values(**color_kwargs)
 
     def reset_settings(self) -> None:
         """Reset settings to fallback values."""
-        Generator.reset()
-        Durations.reset()
-        Colors.reset()
+        self.numbers.reset()
+        self.durations.reset()
+        self.colors.reset()
         self.update_settings_inputs()
 
     def create_popup(self, widget) -> None:

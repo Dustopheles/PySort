@@ -28,5 +28,4 @@ class SortHandler():
             if "_sort.py" in module:
                 name = module.split('_')[0].capitalize() + 'sort'
                 sorts.append(name)
-
         return sorts

@@ -1,7 +1,4 @@
-#: import BarLayout src.widgets.bar_layout.BarLayout
-#: import InfoLayout src.widgets.info_layout.InfoLayout
-#: import FloatInput src.widgets.float_input.FloatInput
-#: import IntInput src.widgets.int_input.IntInput
+#: include src/kv/components.kv
 
 <MainWidget>:
     border: [0, 0, 0, 0]
@@ -78,12 +75,7 @@
                             text: 'Farben'
                             group: 'Settings'
                             group: 'Settings'
-                            on_press: root.ids['settings_panel'].switch_to(root.ids['color_tab'])
-                        SettingsToggleButton
-                            text: 'Auswahl'
-                            group: 'Settings'
-                            group: 'Settings'
-                            on_press: root.ids['settings_panel'].switch_to(root.ids['sort_tab'])
+                            on_press: root.ids['settings_panel'].switch_to(root.ids['colors_tab'])
                         Widget
 
                 TabbedPanel
@@ -107,86 +99,45 @@
                         GridLayout:
                             cols: 1 
                             rows: 2
-                            padding: 10, 8, 10 ,10
+                            padding: 25, 14, 20 ,20
                             canvas:
                                 Color: 
                                     rgba: 36/255, 40/255, 47/255, 1
                                 Rectangle:
                                     size: self.size
                                     pos: self.pos
-                            Label
-                                size_hint_y: None
-                                text_size: self.size
-                                padding: 18, 10, 0, 0
-                                valign: "center"
-                                halign: "left"
-                                size_hint: None, None
-                                width: 300
-                                height: 35
+                            HeaderLabel
                                 text: 'Zahlengenerator'
-                                font_size: 20
-                                bold: True
 
-                            GridLayout
-                                cols: 2
-                                rows: 3
-                                padding: 5, 5, 5, 5
-                                size_hint_y: None
-                                col_default_width: 200
-                                row_default_height: 40
-                                spacing: 5, 1
-                                height: 150
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Anzahl Elemente'
-                                IntInput
-                                    id: members
-                                    size_hint: None, None
-                                    multiline: False
-                                    height: 30
+                            BoxLayout
+                                orientation: 'vertical'
+                                padding: 0, 15, 0, 0
+                                SettingsGrid
+                                    SettingLabel
+                                        text: 'Anzahl Elemente'
+                                    IntInput
+                                        id: numbers_length
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Untere Grenze'
-                                IntInput
-                                    id: lower_limit
-                                    size_hint: None, None
-                                    multiline: False
-                                    height: 30
+                                SettingsGrid
+                                    SettingLabel
+                                        text: 'Untere Grenze'
+                                    IntInput
+                                        id: numbers_lower_limit
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Obere Grenze'
-                                IntInput
-                                    id: upper_limit
-                                    size_hint: None, None
-                                    multiline: False
-                                    height: 30
+                                SettingsGrid
+                                    SettingLabel
+                                        text: 'Obere Grenze'
+                                    IntInput
+                                        id: numbers_upper_limit
+
+                                Widget
 
                     TabbedPanelItem:
                         id: animation_tab
                         GridLayout:
                             cols: 1 
                             rows: 2
-                            padding: 10, 8, 10 ,10
+                            padding: 25, 14, 20 ,20
                             canvas:
                                 Color: 
                                     rgba: 36/255, 40/255, 47/255, 1
@@ -194,276 +145,95 @@
                                     size: self.size
                                     pos: self.pos
 
-                            Label
-                                size_hint_y: None
-                                text_size: self.size
-                                padding: 18, 5, 0, 0
-                                valign: "center"
-                                halign: "left"
-                                size_hint: None, None
-                                width: 300
-                                height: 35
+                            HeaderLabel
                                 text: 'Animation'
-                                font_size: 20
-                                bold: True
 
-                            GridLayout
-                                size_hint_y: None
-                                cols: 2
-                                rows: 3
-                                padding: 5, 5, 5, 5
-                                col_default_width: 200
-                                row_default_height: 40
-                                spacing: 5, 1
-                                height: 150
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Vergleichslänge [s]'
-                                FloatInput
-                                    id: compare_duration
-                                    size_hint: None, None
-                                    multiline: False
-                                    height: 30
+                            BoxLayout
+                                orientation: 'vertical'
+                                padding: 0, 15, 0, 0
+                                SettingsGrid
+                                    SettingLabel
+                                        text: 'Vergleichslänge [s]'
+                                    FloatInput
+                                        id: duration_compare
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Tauschlänge [s]'
-                                FloatInput
-                                    id: switch_duration
-                                    size_hint: None, None
-                                    multiline: False
-                                    height: 30
+                                SettingsGrid
+                                    SettingLabel
+                                        text: 'Tauschlänge [s]'
+                                    FloatInput
+                                        id: duration_switch
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Pausenlänge [s]'
-                                FloatInput
-                                    id: pause_duration
-                                    size_hint: None, None
-                                    multiline: False
-                                    height: 30
-                    
+                                SettingsGrid
+                                    SettingLabel
+                                        text: 'Pausenlänge [s]'
+                                    FloatInput
+                                        id: duration_pause
+
+                                Widget
+                        
 
                     TabbedPanelItem:
-                        id: color_tab
+                        id: colors_tab
                         GridLayout:
                             cols: 1 
                             rows: 3
-                            padding: 10, 8, 10 ,10
+                            padding: 25, 14, 20 ,20
+                            spacing: 0, 15
                             canvas:
                                 Color: 
                                     rgba: 36/255, 40/255, 47/255, 1
                                 Rectangle:
                                     size: self.size
                                     pos: self.pos
-                            Label
-                                size_hint_y: None
-                                text_size: self.size
-                                padding: 18, 10, 0, 0
-                                valign: "center"
-                                halign: "left"
-                                size_hint: None, None
-                                width: 300
-                                height: 35
+                            HeaderLabel
                                 text: 'Diagrammfarben'
-                                font_size: 20
-                                bold: True
 
-                            GridLayout
-                                cols: 2
-                                rows: 6
-                                padding: 5, 5, 5, 5
-                                size_hint_y: None
-                                col_default_width: 50
-                                row_default_height: 40
-                                spacing: 5, 1
-                                height: 150
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Hintergrund'
-                                Button
-                                    id: background_color
-                                    background_normal: ''
-                                    size_hint: None, None
-                                    height: 30
-                                    width: 30
-                                    canvas.before:
-                                        Color:
-                                            rgba: .5, .5, .5, 1
-                                        Line:
-                                            width: 2
-                                            rectangle: self.x, self.y, self.width, self.height
+                            ScrollView:
+                                padding: 0, 30, 0 ,0
+                                do_scroll_x: True
+                                do_scroll_y: True
+                                always_overscroll: False
+                                BoxLayout
+                                    orientation: 'vertical'
+                                    size_hint_y: None
+                                    height: 450
+                                    SettingsGrid
+                                        SettingLabel
+                                            text: 'Hintergrund'
+                                        ColorButton
+                                            id: color_background
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Standard'
-                                Button
-                                    id: passive_color
-                                    background_normal: ''
-                                    size_hint: None, None
-                                    height: 30
-                                    width: 30
-                                    canvas.before:
-                                        Color:
-                                            rgba: .5, .5, .5, 1
-                                        Line:
-                                            width: 2
-                                            rectangle: self.x, self.y, self.width, self.height
+                                    SettingsGrid
+                                        SettingLabel
+                                            text: 'Balken'
+                                        ColorButton
+                                            id: color_passive
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Vergleich'
-                                Button
-                                    id: active_color
-                                    background_normal: ''
-                                    size_hint: None, None
-                                    height: 30
-                                    width: 30
-                                    canvas.before:
-                                        Color:
-                                            rgba: .5, .5, .5, 1
-                                        Line:
-                                            width: 2
-                                            rectangle: self.x, self.y, self.width, self.height
+                                    SettingsGrid              
+                                        SettingLabel
+                                            text: 'Vergleich'
+                                        ColorButton
+                                            id: color_active
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Tausch'
-                                Button
-                                    id: switch_color
-                                    background_normal: ''
-                                    size_hint: None, None
-                                    height: 30
-                                    width: 30
-                                    canvas.before:
-                                        Color:
-                                            rgba: .5, .5, .5, 1
-                                        Line:
-                                            width: 2
-                                            rectangle: self.x, self.y, self.width, self.height
+                                    SettingsGrid
+                                        SettingLabel
+                                            text: 'Tausch'
+                                        ColorButton
+                                            id: color_switch
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Sortiert'
-                                Button
-                                    id: sorted_color
-                                    background_normal: ''
-                                    size_hint: None, None
-                                    height: 30
-                                    width: 30
-                                    canvas.before:
-                                        Color:
-                                            rgba: .5, .5, .5, 1
-                                        Line:
-                                            width: 2
-                                            rectangle: self.x, self.y, self.width, self.height
+                                    SettingsGrid
+                                        SettingLabel
+                                            text: 'Fertig'
+                                        ColorButton
+                                            id: color_sorted
 
-                                Label
-                                    text_size: self.size
-                                    padding: 15, 0, 0, 0
-                                    valign: "center"
-                                    halign: "left"
-                                    size_hint: None, None
-                                    width: 150
-                                    height: 30
-                                    text: 'Text'
-                                Button
-                                    id: text_color
-                                    background_normal: ''
-                                    size_hint: None, None
-                                    height: 30
-                                    width: 30
-                                    canvas.before:
-                                        Color:
-                                            rgba: .5, .5, .5, 1
-                                        Line:
-                                            width: 2
-                                            rectangle: self.x, self.y, self.width, self.height
+                                    SettingsGrid
+                                        SettingLabel
+                                            text: 'Text'
+                                        ColorButton
+                                            id: color_text
 
-
-                    TabbedPanelItem:
-                        id: sort_tab
-                        GridLayout:
-                            cols: 1 
-                            rows: 10
-                            padding: 10, 8, 10 ,10
-                            canvas:
-                                Color: 
-                                    rgba: 36/255, 40/255, 47/255, 1
-                                Rectangle:
-                                    size: self.size
-                                    pos: self.pos
-                            Label
-                                size_hint_y: None
-                                text_size: self.size
-                                padding: 18, 10, 0, 0
-                                valign: "center"
-                                halign: "left"
-                                size_hint: None, None
-                                width: 300
-                                height: 35
-                                text: 'Sortierungsverfahren'
-                                font_size: 20
-                                bold: True
-
-                            GridLayout
-                                id: choice_grid
-                                size_hint_y: None
-                                cols: 1
-                                rows: 6
-                                padding: 15, 15, 5, 5
-                                col_default_width: 200
-                                row_default_height: 40
-                                spacing: 2, 2
-                                height: 180
+                                    Widget
 
             InfoLayout
                 width: self.width
@@ -475,36 +245,21 @@
             rows: 3
             HeaderBar
 
-                Button
+                EventButton
                     width: 150
-                    size_hint_x: None
-                    background_normal: "res/bttn_normal.png"
-                    background_disabled_normal: "res/bttn_pressed.png"
-                    background_down: "res/bttn_pressed.png"
-                    background_disabled_down: "res/bttn_pressed.png"
                     id: load_bttn
-                    text: 'Laden'
+                    text: 'Neu'
                     on_press: root.load_on_press()
 
-                Button
+                EventButton
                     width: 150
-                    size_hint_x: None
-                    background_normal: "res/bttn_normal.png"
-                    background_disabled_normal: "res/bttn_pressed.png"
-                    background_down: "res/bttn_pressed.png"
-                    background_disabled_down: "res/bttn_pressed.png"
                     id: start_bttn
                     text: 'Start'
                     on_press: root.start_on_press()
                     disabled: True
 
-                Button
+                EventButton
                     width: 150
-                    size_hint_x: None
-                    background_normal: "res/bttn_normal.png"
-                    background_disabled_normal: "res/bttn_pressed.png"
-                    background_down: "res/bttn_pressed.png"
-                    background_disabled_down: "res/bttn_pressed.png"
                     id: stop_bttn
                     text: 'Stop'
                     on_press: root.stop_on_press()
@@ -524,64 +279,20 @@
                     on_press: root.next_on_press()
                     disabled: True
                 
-                Label
-                    id: sort_label
+                Spinner
+                    id: sort_spinner
+                    width: 250
                     size_hint_x: None
-                    width: 220
-                    text: 'Sortierungsverfahren'
-                    padding: 1, 1, 1, 1
-                    halign: "left"
-                    valign: "middle"
+                    text: 'Bubbblesort'
+                    values: 'Bubbblesort'
+                    canvas:
+                        Color:
+                            rgba: 26/255, 159/255, 255/255, 1
+                        Triangle:
+                            points: (self.x+self.width, self.y, self.x+self.width-15, self.y , self.x+self.width, self.y+15)
 
             BarLayout
                 id: bars
 
             InfoLayout
                 width: self.width
-
-<ToggleButton>
-    background_normal: "res/bttn_pressed.png"
-    background_down: "res/tab_selected.png"
-
-<SettingsToggleButton@ToggleButton>
-    size_hint_y: None
-    height: 40
-    background_normal: "res/toggle_normal.png"
-    background_down: "res/toggle_selected.png"
-    halign: "left"
-    valign: "center"
-    text_size: 120, None
-
-<ActionButton@Button>
-    size_hint_x: None
-    background_normal: "res/bttn_normal.png"
-    background_disabled_normal: "res/bttn_pressed.png"
-    background_down: "res/bttn_pressed.png"
-    background_disabled_down: "res/bttn_pressed.png"
-
-<HeaderBar@BoxLayout>
-    size_hint_y: None
-    height: 50
-    padding: 2, 1, 2 ,1
-    spacing: 1
-    canvas:
-        Color:
-            rgba: 23/255, 29/255, 37/255, 1
-        Rectangle:
-            size: self.size
-            pos: self.pos
-        Color:
-            rgba: 47/255, 54/255, 65/255, 1
-        Rectangle:
-            size: (self.width, 2)
-            pos: (0, self.y)
-
-<TabbedPanelHeader>
-    background_normal: "res/bttn_normal.png"
-    background_down: "res/tab_selected.png"
-    bold: True
-
-<TextInput>
-    foreground_color: 1, 1, 1, 1
-    background_color: (70/255, 77/255, 88/255, 1)
-    cursor_color: 1, 1, 1, 1
