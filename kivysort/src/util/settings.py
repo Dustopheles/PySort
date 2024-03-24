@@ -106,8 +106,9 @@ class Settings():
         # pylint: disable=no-member
         clr_picker.bind(color=self.change_color)
         popup = Popup(title='Farbauswahl',
-            content=clr_picker,
-            size_hint=(None, None), size=(450, 450))
+                      content=clr_picker,
+                      size_hint=(None, None),
+                      size=(450, 450))
         popup.open()
 
     def change_color(self, _widget, color) -> None:

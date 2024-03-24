@@ -1,4 +1,4 @@
-"""Windows 8+ PyInstall AppBuilder."""
+"""Linux PyInstall AppBuilder."""
 
 import os
 import PyInstaller.__main__

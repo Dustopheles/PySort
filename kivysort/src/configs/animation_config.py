@@ -18,18 +18,19 @@ class AnimationConfig():
         """Save values to class."""
         if not kwargs:
             return
+        if kwargs.keys() != vars(self).keys():
+            return
         for value in kwargs.values():
             if not isinstance(value, float):
                 return
 
-        self.duration_compare = kwargs['duration_compare']
-        self.duration_switch = kwargs['duration_switch']
-        self.duration_pause = kwargs['duration_pause']
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
     def get_values(self) -> dict:
         """Return object attributes as dictionary."""
-        ret_dict = vars(self)
-        return ret_dict
+        obj_dict = vars(self)
+        return obj_dict
 
     def reset(self) -> None:
         """Reset values to fallback"""

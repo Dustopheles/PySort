@@ -1,3 +1,5 @@
+#: include src/kv/overwrites.kv
+
 #: import InfoLayout src.widgets.info_layout.InfoLayout
 #: import FloatInput src.widgets.float_input.FloatInput
 #: import IntInput src.widgets.int_input.IntInput
@@ -37,10 +39,6 @@
     halign: "left"
     width: 250
 
-<ToggleButton>
-    background_normal: "res/bttn_pressed.png"
-    background_down: "res/tab_selected.png"
-
 <SettingsToggleButton@ToggleButton>
     size_hint_y: None
     height: 40
@@ -64,12 +62,6 @@
     background_down: "res/bttn_pressed.png"
     background_disabled_down: "res/bttn_pressed.png"
 
-<Button>
-    background_normal: "res/bttn_normal.png"
-    background_disabled_normal: "res/bttn_pressed.png"
-    background_down: "res/bttn_pressed.png"
-    background_disabled_down: "res/bttn_pressed.png"
-
 <HeaderBar@BoxLayout>
     size_hint_y: None
     height: 50
@@ -86,17 +78,6 @@
         Rectangle:
             size: (self.width, 2)
             pos: (0, self.y)
-
-<TabbedPanelHeader>
-    background_normal: "res/bttn_normal.png"
-    background_down: "res/tab_selected.png"
-    bold: True
-
-<TextInput>
-    foreground_color: 1, 1, 1, 1
-    background_color: (70/255, 77/255, 88/255, 1)
-    cursor_color: 1, 1, 1, 1
-    multiline: False
 
 <ColorButton@Button>
     background_normal: ''

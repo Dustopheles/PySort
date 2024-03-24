@@ -10,7 +10,7 @@ except ImportError as i_err:
 
 
 class MainWidget(TabbedPanel):
-    """Main widget for window."""
+    """Main widget class for app, acts as root."""
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         self.settings = Settings(self.ids)

@@ -7,6 +7,7 @@ from kivy.app import App
 from kivy.config import Config
 from kivy.lang import Builder
 # pylint: disable=unused-import
+# PyInstaller imports for kivy
 from kivy.resources import resource_add_path, resource_find
 
 from src.widgets.main_widget import MainWidget
@@ -21,7 +22,7 @@ class SortApp(App):
         return MainWidget()
 
     def configurate(self):
-        """Set up kivy config."""
+        """Set kivy config values."""
         Config.set('graphics', 'minimum_width', '900')
         Config.set('graphics', 'minimum_height', '500')
         Config.set('graphics', 'width', '900')
@@ -30,6 +31,7 @@ class SortApp(App):
 
 
 if __name__ == '__main__':
+    # PyInstaller dependency block
     if hasattr(sys, '_MEIPASS'):
         # pylint: disable=protected-access
         resource_add_path(os.path.join(sys._MEIPASS))

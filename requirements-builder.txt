@@ -1,0 +1,2 @@
+kivy[dev]==2.3.0
+pyinstaller==6.5.0

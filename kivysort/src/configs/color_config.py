@@ -21,21 +21,20 @@ class ColorConfig():
         """Set object attributes."""
         if not kwargs:
             return
+        if kwargs.keys() != vars(self).keys():
+            return
         for value in kwargs.values():
-            if not isinstance(value, list):
+            type_bool = isinstance(value, (list, tuple))
+            if not type_bool:
                 return
 
-        self.color_background = kwargs['color_background']
-        self.color_passive = kwargs['color_passive']
-        self.color_active = kwargs['color_active']
-        self.color_switch = kwargs['color_switch']
-        self.color_sorted = kwargs['color_sorted']
-        self.color_text = kwargs['color_text']
+        for key, value in kwargs.items():
+            setattr(self, key, value)
 
     def get_values(self) -> dict:
         """Return object attributes as dictionary."""
-        ret_dict = vars(self)
-        return ret_dict
+        obj_dict = vars(self)
+        return obj_dict
 
     def reset(self) -> None:
         """Reset values to fallback"""
