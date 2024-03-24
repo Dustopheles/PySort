@@ -3,8 +3,8 @@
 from kivy.uix.tabbedpanel import TabbedPanel
 
 try:
-    from src.util.settings import Settings
-    from src.util.visualizer import Visualizer
+    from src.controller.settings import Settings
+    from src.controller.visualizer import Visualizer
 except ImportError as i_err:
     print(i_err)
 

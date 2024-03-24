@@ -15,30 +15,30 @@
 
     TabbedPanelItem:
         text: 'EINSTELLUNGEN'
-        GridLayout
+        GridLayout:
             cols: 1
             rows: 3
-            HeaderBar
 
-                ActionButton
+            HeaderBar:
+                ActionButton:
                     id: save_bttn
                     text: 'Speichern'
                     on_press: root.save_settings_on_press()
 
-                ActionButton
+                ActionButton:
                     id: save_n_load_bttn
                     text: 'Speichern & Laden'
                     on_press: root.save_and_load_settings_on_press()
 
-                ActionButton
+                ActionButton:
                     id: reset_bttn
                     text: 'Zurücksetzen'
                     on_press: root.reset_settings_on_press()
 
-            GridLayout
+            GridLayout:
                 cols: 2
                 rows: 1
-                GridLayout
+                GridLayout:
                     cols: 1
                     rows: 2
                     size_hint_x: None
@@ -50,7 +50,7 @@
                             size: self.size
                             pos: self.pos
 
-                    Label
+                    Label:
                         size_hint_y: None
                         text: 'EINSTELLUNGEN'
                         padding: 0, 5, 0, 0
@@ -59,26 +59,29 @@
                         bold: True
                         font_size: 18
 
-                    BoxLayout
+                    BoxLayout:
                         orientation: 'vertical'
 
-                        SettingsToggleButton
+                        SettingsToggleButton:
                             state: 'down'
                             text: 'Generator'
                             group: 'Settings'
                             on_press: root.ids['settings_panel'].switch_to(root.ids['generator_tab'])
-                        SettingsToggleButton
+                        
+                        SettingsToggleButton:
                             text: 'Animation'
                             group: 'Settings'
                             on_press: root.ids['settings_panel'].switch_to(root.ids['animation_tab'])
-                        SettingsToggleButton
+                        
+                        SettingsToggleButton:
                             text: 'Farben'
                             group: 'Settings'
                             group: 'Settings'
                             on_press: root.ids['settings_panel'].switch_to(root.ids['colors_tab'])
+                        
                         Widget
 
-                TabbedPanel
+                TabbedPanel:
                     id: settings_panel
                     border: [0, 0, 0, 0]
                     pos_hint: {'center_x': .5, 'center_y': .5}
@@ -96,6 +99,7 @@
                     
                     TabbedPanelItem:
                         id: generator_tab
+
                         GridLayout:
                             cols: 1 
                             rows: 2
@@ -106,28 +110,33 @@
                                 Rectangle:
                                     size: self.size
                                     pos: self.pos
-                            HeaderLabel
+                            
+                            HeaderLabel:
                                 text: 'Zahlengenerator'
 
-                            BoxLayout
+                            BoxLayout:
                                 orientation: 'vertical'
                                 padding: 0, 15, 0, 0
-                                SettingsGrid
-                                    SettingLabel
+                                
+                                SettingsGrid:
+                                    SettingLabel:
                                         text: 'Anzahl Elemente'
-                                    IntInput
+
+                                    IntInput:
                                         id: numbers_length
 
-                                SettingsGrid
-                                    SettingLabel
+                                SettingsGrid:
+                                    SettingLabel:
                                         text: 'Untere Grenze'
-                                    IntInput
+
+                                    IntInput:
                                         id: numbers_lower_limit
 
-                                SettingsGrid
-                                    SettingLabel
+                                SettingsGrid:
+                                    SettingLabel:
                                         text: 'Obere Grenze'
-                                    IntInput
+
+                                    IntInput:
                                         id: numbers_upper_limit
 
                                 Widget
@@ -145,28 +154,31 @@
                                     size: self.size
                                     pos: self.pos
 
-                            HeaderLabel
+                            HeaderLabel:
                                 text: 'Animation'
 
-                            BoxLayout
+                            BoxLayout:
                                 orientation: 'vertical'
                                 padding: 0, 15, 0, 0
-                                SettingsGrid
-                                    SettingLabel
+                                SettingsGrid:
+                                    SettingLabel:
                                         text: 'Vergleichslänge [s]'
-                                    FloatInput
+                                        
+                                    FloatInput:
                                         id: duration_compare
 
-                                SettingsGrid
-                                    SettingLabel
+                                SettingsGrid:
+                                    SettingLabel:
                                         text: 'Tauschlänge [s]'
-                                    FloatInput
+
+                                    FloatInput:
                                         id: duration_switch
 
-                                SettingsGrid
-                                    SettingLabel
+                                SettingsGrid:
+                                    SettingLabel:
                                         text: 'Pausenlänge [s]'
-                                    FloatInput
+
+                                    FloatInput:
                                         id: duration_pause
 
                                 Widget
@@ -185,7 +197,8 @@
                                 Rectangle:
                                     size: self.size
                                     pos: self.pos
-                            HeaderLabel
+                                
+                            HeaderLabel:
                                 text: 'Diagrammfarben'
 
                             ScrollView:
@@ -193,49 +206,55 @@
                                 do_scroll_x: True
                                 do_scroll_y: True
                                 always_overscroll: False
-                                BoxLayout
+                                BoxLayout:
                                     orientation: 'vertical'
                                     size_hint_y: None
                                     height: 450
-                                    SettingsGrid
-                                        SettingLabel
+                                    SettingsGrid:
+                                        SettingLabel:
                                             text: 'Hintergrund'
-                                        ColorButton
+
+                                        ColorButton:
                                             id: color_background
 
-                                    SettingsGrid
-                                        SettingLabel
+                                    SettingsGrid:
+                                        SettingLabel:
                                             text: 'Balken'
-                                        ColorButton
+
+                                        ColorButton:
                                             id: color_passive
 
-                                    SettingsGrid              
-                                        SettingLabel
+                                    SettingsGrid:              
+                                        SettingLabel:
                                             text: 'Vergleich'
-                                        ColorButton
+
+                                        ColorButton:
                                             id: color_active
 
-                                    SettingsGrid
-                                        SettingLabel
+                                    SettingsGrid:
+                                        SettingLabel:
                                             text: 'Tausch'
-                                        ColorButton
+
+                                        ColorButton:
                                             id: color_switch
 
-                                    SettingsGrid
-                                        SettingLabel
+                                    SettingsGrid:
+                                        SettingLabel:
                                             text: 'Fertig'
-                                        ColorButton
+
+                                        ColorButton:
                                             id: color_sorted
 
-                                    SettingsGrid
-                                        SettingLabel
+                                    SettingsGrid:
+                                        SettingLabel:
                                             text: 'Text'
-                                        ColorButton
+
+                                        ColorButton:
                                             id: color_text
 
                                     Widget
 
-            InfoLayout
+            InfoLayout:
                 width: self.width
 
     TabbedPanelItem:
@@ -243,29 +262,28 @@
         GridLayout
             cols: 1
             rows: 3
-            HeaderBar
-
-                EventButton
+            HeaderBar:
+                EventButton:
                     width: 150
                     id: load_bttn
                     text: 'Neu'
                     on_press: root.load_on_press()
 
-                EventButton
+                EventButton:
                     width: 150
                     id: start_bttn
                     text: 'Start'
                     on_press: root.start_on_press()
                     disabled: True
 
-                EventButton
+                EventButton:
                     width: 150
                     id: stop_bttn
                     text: 'Stop'
                     on_press: root.stop_on_press()
                     disabled: True
 
-                ActionButton
+                ActionButton:
                     id: previous_bttn
                     width: 50
                     text: '<'
@@ -279,7 +297,7 @@
                     on_press: root.next_on_press()
                     disabled: True
                 
-                Spinner
+                Spinner:
                     id: sort_spinner
                     width: 250
                     size_hint_x: None
@@ -291,10 +309,10 @@
                         Triangle:
                             points: (self.x+self.width, self.y, self.x+self.width-15, self.y , self.x+self.width, self.y+15)
 
-            BarLayout
+            BarLayout:
                 id: bars
 
-            InfoLayout
+            InfoLayout:
                 width: self.width
     
     TabbedPanelItem:

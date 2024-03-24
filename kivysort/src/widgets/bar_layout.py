@@ -16,11 +16,11 @@ class BarLayout(FloatLayout):
         super(BarLayout, self).__init__(**kwargs)
         self.numbers = []
         self.bars = []
-        self.static_x = []
-        self.sort_obj = None
+        self.ref_x = []
         # pylint: disable=no-member
         self.bind(size=self.resize_bars)
         self.redraw_rectangle()
+        self.freeze = False
 
     def calc_bar_layout(self) -> tuple:
         """Calculate bar layout size."""
@@ -38,7 +38,7 @@ class BarLayout(FloatLayout):
         width, root_height, max_num = self.calc_bar_layout()
         for number in self.numbers:
             height = root_height*(number/max_num)
-            self.static_x.append(x)
+            self.ref_x.append(x)
             self.bars.append(self.add_bar(width, height, x, number))
             x += width + 5
         self.resize_bars()
@@ -52,17 +52,16 @@ class BarLayout(FloatLayout):
         """Resize bar widgets."""
         if not self.bars:
             return
+        if self.freeze:
+            return
         x = 10
         width, root_height, max_num = self.calc_bar_layout()
         for index, widget in enumerate(self.bars):
             widget.height = root_height*(int(widget.text)/max_num)
             widget.width = width
             widget.x = x
-            self.static_x[index] = x
+            self.ref_x[index] = x
             x += width + 5
-
-        if self.sort_obj:
-            self.sort_obj.global_x = self.static_x
 
     def add_bar(self, width: int, height: int, x: int, number: int) -> BarWidget:
         """Add bar to parent widget."""

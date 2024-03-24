@@ -17,15 +17,21 @@ class SortHandler():
     @staticmethod
     def available_sorts() -> list:
         """Return list of available sorts."""
+        path = SortHandler._relative_path()
+        modules = os.listdir(path)
+        sorts = []
+        for module in modules:
+            if "_sort.py" in module.lower():
+                name = module.split('_')[0].capitalize() + 'sort'
+                sorts.append(name)
+        return sorts
+
+    @staticmethod
+    def _relative_path() -> str:
+        """Return right relative os path."""
         path = os.path.join(os.getcwd(), 'kivysort', 'src', 'sorting')
         if not os.path.exists(path):
             path = os.path.join(os.getcwd(), 'src', 'sorting')
         if not os.path.exists(path):
             path = os.path.join(os.getcwd(), '_internal', 'src', 'sorting')
-        modules = os.listdir(path)
-        sorts = []
-        for module in modules:
-            if "_sort.py" in module:
-                name = module.split('_')[0].capitalize() + 'sort'
-                sorts.append(name)
-        return sorts
+        return path
