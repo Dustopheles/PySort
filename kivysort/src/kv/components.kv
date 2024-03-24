@@ -5,7 +5,7 @@
 #: import IntInput src.widgets.int_input.IntInput
 #: import BarLayout src.widgets.bar_layout.BarLayout
 
-<HeaderLabel@Label>
+<HeaderLabel@Label>:
     size_hint_y: None
     text_size: self.size
     padding: 0, 0, 0, 0
@@ -17,7 +17,7 @@
     bold: True
     font_size: 20
 
-<SettingsGrid@GridLayout>
+<SettingsGrid@GridLayout>:
     cols: 2
     rows: 1
     padding: 0, 15, 0, 15
@@ -27,19 +27,19 @@
     height: 60
     canvas:
         Color:
-            rgba: 70/255, 77/255, 88/255, 1
+            rgba: entry_separator_color
         Rectangle:
             pos: self.x, self.y
             size: self.width, 2
 
-<SettingLabel@Label>
+<SettingLabel@Label>:
     size_hint_x: None
     text_size: self.size
     valign: "center"
     halign: "left"
     width: 250
 
-<SettingsToggleButton@ToggleButton>
+<SettingsToggleButton@ToggleButton>:
     size_hint_y: None
     height: 40
     background_normal: "res/toggle_normal.png"
@@ -48,45 +48,45 @@
     valign: "center"
     text_size: 120, None
 
-<EventButton@Button>
+<EventButton@Button>:
     size_hint_x: None
     background_normal: "res/bttn_normal.png"
     background_disabled_normal: "res/bttn_pressed.png"
     background_down: "res/bttn_pressed.png"
     background_disabled_down: "res/bttn_pressed.png"
 
-<ActionButton@Button>
+<ActionButton@Button>:
     size_hint_x: None
     background_normal: "res/bttn_normal.png"
     background_disabled_normal: "res/bttn_pressed.png"
     background_down: "res/bttn_pressed.png"
     background_disabled_down: "res/bttn_pressed.png"
 
-<HeaderBar@BoxLayout>
+<HeaderBar@BoxLayout>:
     size_hint_y: None
     height: 50
     padding: 2, 1, 2 ,1
     spacing: 1
     canvas:
         Color:
-            rgba: 23/255, 29/255, 37/255, 1
+            rgba: header_color
         Rectangle:
             size: self.size
             pos: self.pos
         Color:
-            rgba: 47/255, 54/255, 65/255, 1
+            rgba: separator_color
         Rectangle:
             size: (self.width, 2)
             pos: (0, self.y)
 
-<ColorButton@Button>
+<ColorButton@Button>:
     background_normal: ''
     size_hint: None, None
     height: 30
     width: 30
     canvas.before:
         Color:
-            rgba: .5, .5, .5, 1
+            rgba: button_border_color
         Line:
             width: 2
             rectangle: self.x, self.y, self.width, self.height

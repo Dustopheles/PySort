@@ -8,7 +8,7 @@
     scroll_type: ["bars"]
     canvas:
         Color:
-            rgba: (23/255, 29/255, 37/255, 1)
+            rgba: header_color
         Rectangle:
             size: self.size
             pos: self.pos
@@ -45,7 +45,7 @@
                     width: 200
                     canvas:
                         Color: 
-                            rgba: 42/255, 45/255, 52/255, 1
+                            rgba: side_panel_color
                         Rectangle:
                             size: self.size
                             pos: self.pos
@@ -55,7 +55,7 @@
                         text: 'EINSTELLUNGEN'
                         padding: 0, 5, 0, 0
                         height: 60
-                        color: 26/255, 159/255, 255/255, 1
+                        color: selected_color
                         bold: True
                         font_size: 18
 
@@ -89,7 +89,7 @@
                     tab_width: 0
                     canvas:
                         Color:
-                            rgba: (23/255, 29/255, 37/255, 1)
+                            rgba: header_color
                         Rectangle:
                             size: self.size
                             pos: self.pos
@@ -102,7 +102,7 @@
                             padding: 25, 14, 20 ,20
                             canvas:
                                 Color: 
-                                    rgba: 36/255, 40/255, 47/255, 1
+                                    rgba: panel_color
                                 Rectangle:
                                     size: self.size
                                     pos: self.pos
@@ -140,7 +140,7 @@
                             padding: 25, 14, 20 ,20
                             canvas:
                                 Color: 
-                                    rgba: 36/255, 40/255, 47/255, 1
+                                    rgba: panel_color
                                 Rectangle:
                                     size: self.size
                                     pos: self.pos
@@ -181,7 +181,7 @@
                             spacing: 0, 15
                             canvas:
                                 Color: 
-                                    rgba: 36/255, 40/255, 47/255, 1
+                                    rgba: panel_color
                                 Rectangle:
                                     size: self.size
                                     pos: self.pos
@@ -287,7 +287,7 @@
                     values: 'Bubbblesort'
                     canvas:
                         Color:
-                            rgba: 26/255, 159/255, 255/255, 1
+                            rgba: selected_color
                         Triangle:
                             points: (self.x+self.width, self.y, self.x+self.width-15, self.y , self.x+self.width, self.y+15)
 
