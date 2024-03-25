@@ -24,12 +24,14 @@ class EventScheduler():
         self.loop_counter = 0
         self.next_timeout = 0
         self.operations = []
+        self.stopper = 0
 
     def clear_scheduler(self) -> None:
         """Reset singleton"""
         self.loop_counter = 0
         self.next_timeout = 0
         self.operations = []
+        self.stopper = 0
 
     def schedule_event(self, operation: str, index_a: int, index_b: int) -> None:
         """Schedule event of type x on event scheduler.
@@ -66,6 +68,11 @@ class EventScheduler():
 
     def check_finished(self, widget: BarWidget) -> None:
         """Check if bar is in final place and color if."""
+        self.stopper += 1
+        if self.stopper > 1:
+            self.stopper = 0
+            return
+
         if self.loop_counter >= len(self.operations)-1:
             for widget in self.bar_layout.bars:
                 widget.state = "sorted"
@@ -88,8 +95,7 @@ class EventScheduler():
     def highlight(self, widget: BarWidget) -> Animation:
         """Highlighting animation."""
         animation = Animation(x=widget.x, y=widget.y,
-                              duration=self.durations.duration_compare,
-                              s=1/30)
+                              duration=self.durations.duration_compare)
         animation.bind(on_start=self.highlight_on_start)
         animation.bind(on_complete=self.highlight_on_complete)
         animation.start(widget)
@@ -126,8 +132,7 @@ class EventScheduler():
     def switch(self, widget: BarWidget, x: int) -> Animation:
         """Switch animation."""
         animation = Animation(x=x, y=widget.y,
-                              duration=self.durations.duration_switch,
-                              s=1/30)
+                              duration=self.durations.duration_switch)
         animation.bind(on_start=self.switch_on_start)
         animation.bind(on_complete=self.switch_on_complete)
         animation.start(widget)
@@ -135,10 +140,13 @@ class EventScheduler():
 
     def reset_colors(self):
         """Reset widgets colors back to passive."""
-        current = self.operations[self.loop_counter].widget_pair()
+        self.stopper += 1
+        if self.stopper > 1:
+            self.stopper = 0
+            return
+
         for widget in self.bar_layout.bars:
-            if widget not in current:
-                widget.state = "default"
+            widget.state = "default"
 
     def switch_on_start(self, _animation, widget: BarWidget) -> None:
         """Reactivate start bttn after finishing animation."""

@@ -50,17 +50,16 @@ class Visualizer():
                                              numbers=numbers,)
 
 
-        self.ids["sort_spinner"].text = self.sort_obj.sort_name
+        self.ids["sort_spinner"].text = self.sort_obj.name
 
     def start(self) -> None:
         """Start sorting animation."""
         self.call_sort()
-        #self.ids["bars"].freeze = True
 
     def call_sort(self) -> None:
         """Call selected sorting class."""
         if not self.schedular.operations:
-            self.sort_obj.sort()
+            self.sort_obj.start_sort()
             return
 
         self.correct_zero()
@@ -80,7 +79,6 @@ class Visualizer():
         for operation in self.schedular.operations:
             operation.event.cancel()
         self.loop_id = self.schedular.loop_counter
-        #self.ids["bars"].freeze = False
 
     def correct_zero(self) -> None:
         """Correct indexex when previous step would hit index 0."""

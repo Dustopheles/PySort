@@ -8,12 +8,19 @@ except ImportError as i_err:
 
 class Sort():
     """Sort base class."""
+    scheduler = EventScheduler()
     def __init__(self, **kwargs):
         self.numbers = kwargs['numbers']
-        self.scheduler = EventScheduler()
+        self.sorted_numbers = []
+        self.name = ""
 
-    def sort(self):
+    def start_sort(self):
+        """Wrapper for sort method."""
+        self.sorted_numbers = self.sort(self.numbers)
+
+    def sort(self, numbers: list) -> list:
         """Abstract sorting method."""
+        return numbers
 
     def schedule_event(self, operation: str, index_a: int, index_b: int) -> None:
         """Schedule event of type x on event scheduler.

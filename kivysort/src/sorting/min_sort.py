@@ -1,25 +1,24 @@
 """Minsort module."""
 
+# pylint: disable=all
 from src.sorting.sort import Sort
 
 
 class Minsort(Sort):
     """Minsort class."""
-    # pylint: disable=all
     def __init__(self, **kwargs):
-        super(Minsort, self).__init__(**kwargs)
-        self.sort_name = 'Minsort'    
+        super().__init__(**kwargs)
+        self.name = 'Minsort'    
 
-    def sort(self) -> None:
+    def sort(self, numbers: list) -> list:
         """Minsort algorithm."""
-        i_list = self.numbers
-        length = len(i_list)
+        length = len(numbers)
         for k in range(1, length):
-            MinPos = k-1
+            min_pos = k-1
             for i in range(k, length):
-                self.schedule_event("compare", i, MinPos)
-                if i_list[i] < i_list[MinPos]:
-                    MinPos = i
-            i_list[k-1], i_list[MinPos] = i_list[MinPos], i_list[k-1]
-            self.schedule_event("switch", k-1, MinPos)
-        self.sorted_numbers = i_list
+                self.schedule_event("compare", i, min_pos)
+                if numbers[i] < numbers[min_pos]:
+                    min_pos = i
+            numbers[k-1], numbers[min_pos] = numbers[min_pos], numbers[k-1]
+            self.schedule_event("switch", k-1, min_pos)
+        return numbers
