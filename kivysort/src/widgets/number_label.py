@@ -11,7 +11,7 @@ except ImportError as i_err:
 class NumberLabel(Label):
     """NumberLabel class."""
     def __init__(self, root, **kwargs):
-        super(NumberLabel, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.root = root
         self.root.bind(pos=self.update_self)
         self.root.bind(size=self.update_self)

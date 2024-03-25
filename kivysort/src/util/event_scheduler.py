@@ -15,10 +15,9 @@ except ImportError as i_err:
 @singleton
 class EventScheduler():
     """Event scheduler class used to schedule events with event clock."""
+    colors = ColorConfig()
+    durations = AnimationConfig()
     def __init__(self):
-        # Configs
-        self.colors = ColorConfig()
-        self.durations = AnimationConfig()
         # Barlayout
         self.bar_layout = None
         # Indexer
@@ -69,7 +68,7 @@ class EventScheduler():
         """Check if bar is in final place and color if."""
         if self.loop_counter >= len(self.operations)-1:
             for widget in self.bar_layout.bars:
-                widget.redraw_rectangle(rgba=self.colors.color_sorted)
+                widget.state = "sorted"
 
     def check_position(self, widget: BarWidget) -> None:
         """Check if bar is on right x."""
@@ -99,7 +98,7 @@ class EventScheduler():
     def highlight_on_start(self, _animation, widget: BarWidget) -> None:
         """Switch color on animation start."""
         self.reset_colors()
-        widget.redraw_rectangle(rgba=self.colors.color_active)
+        widget.state = "compare"
 
     def highlight_on_complete(self, _animation, widget: BarWidget) -> None:
         """Reset color after animation completion."""
@@ -139,12 +138,12 @@ class EventScheduler():
         current = self.operations[self.loop_counter].widget_pair()
         for widget in self.bar_layout.bars:
             if widget not in current:
-                widget.redraw_rectangle(rgba=self.colors.color_passive)
+                widget.state = "default"
 
     def switch_on_start(self, _animation, widget: BarWidget) -> None:
         """Reactivate start bttn after finishing animation."""
         self.reset_colors()
-        widget.redraw_rectangle(rgba=self.colors.color_switch)
+        widget.state = "switch"
 
     def switch_on_complete(self, _animation, widget: BarWidget) -> None:
         """Reactivate start bttn after finishing animation."""

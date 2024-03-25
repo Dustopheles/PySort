@@ -2,6 +2,8 @@
 
 from kivy.uix.button import Label
 from kivy.graphics import Color, Rectangle
+# pylint: disable=no-name-in-module
+from kivy.properties import StringProperty
 
 try:
     from src.configs.color_config import ColorConfig
@@ -11,15 +13,28 @@ except ImportError as i_err:
 
 class BarWidget(Label):
     """Bar widget class."""
+    state = StringProperty(None)
+    colors = ColorConfig()
     def __init__(self, **kwargs):
-        super(BarWidget, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.size_hint = (None, None)
-        self.pos = (kwargs["x"], 100)
-        self.size = (kwargs["width"], kwargs["height"])
-
-        self.text = kwargs["text"]
-        self.colors = ColorConfig()
+        self.y = 100
         self.redraw_rectangle(rgba=self.colors.color_passive)
+        # pylint: disable=no-member
+        self.bind(state=self.on_state_change)
+
+    def on_state_change(self, *_args) -> None:
+        """State change event."""
+        match self.state:
+            case "compare":
+                color = self.colors.color_active
+            case "switch":
+                color = self.colors.color_switch
+            case "sorted":
+                color = self.colors.color_sorted
+            case _:
+                color = self.colors.color_passive
+        self.redraw_rectangle(color)
 
     def redraw_rectangle(self, rgba: list) -> None:
         """Redraw and bind canvas rectangle with input rgba."""

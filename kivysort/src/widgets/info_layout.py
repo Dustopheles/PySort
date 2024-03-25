@@ -10,13 +10,12 @@ from kivy.uix.image import Image
 class InfoLayout(BoxLayout):
     """Info layout widget class."""
     def __init__(self, **kwargs):
-        super(InfoLayout, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.size_hint_y = None
         self.height = 50
         self.padding = (13,0,13,1)
         self.spacing = 4
         self.on_load()
-
 
     def on_load(self) -> None:
         """On load event."""

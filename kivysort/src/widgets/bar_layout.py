@@ -2,6 +2,8 @@
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Rectangle, Color
+# pylint: disable=no-name-in-module
+from kivy.properties import BooleanProperty
 
 try:
     from src.widgets.bar_widget import BarWidget
@@ -12,15 +14,15 @@ except ImportError as i_err:
 
 class BarLayout(FloatLayout):
     """Bar layout widget class."""
+    freeze = BooleanProperty(False)
     def __init__(self, **kwargs):
-        super(BarLayout, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.numbers = []
         self.bars = []
         self.ref_x = []
         # pylint: disable=no-member
         self.bind(size=self.resize_bars)
         self.redraw_rectangle()
-        self.freeze = False
 
     def calc_bar_layout(self) -> tuple:
         """Calculate bar layout size."""

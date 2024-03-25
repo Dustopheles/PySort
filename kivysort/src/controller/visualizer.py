@@ -14,10 +14,10 @@ except ImportError as i_err:
 
 class Visualizer():
     """Visualizer class."""
+    numbers = GeneratorConfig()
+    durations = AnimationConfig()
+    schedular = EventScheduler()
     def __init__(self, ids) -> None:
-        self.numbers = GeneratorConfig()
-        self.durations = AnimationConfig()
-        self.schedular = EventScheduler()
         self.ids = ids
         self.sort_name = "Bubblesort"
         self.sort_obj = None

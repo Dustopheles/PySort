@@ -12,10 +12,10 @@ except ImportError as i_err:
 
 class Settings():
     """Settings class."""
+    numbers = GeneratorConfig()
+    colors = ColorConfig()
+    durations = AnimationConfig()
     def __init__(self, ids) -> None:
-        self.numbers = GeneratorConfig()
-        self.colors = ColorConfig()
-        self.durations = AnimationConfig()
         self.ids = ids
         self.color_widget = None
         self.bind_colors()
