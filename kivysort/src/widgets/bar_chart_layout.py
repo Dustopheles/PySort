@@ -3,7 +3,7 @@
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Rectangle, Color
 # pylint: disable=no-name-in-module
-from kivy.properties import BooleanProperty
+from kivy.properties import BooleanProperty, ListProperty
 
 try:
     from src.widgets.bar_widget import BarWidget
@@ -12,13 +12,14 @@ try:
 except ImportError as i_err:
     print(i_err)
 
-class BarLayout(FloatLayout):
+class BarChartLayout(FloatLayout):
     """Bar layout widget class."""
     freeze = BooleanProperty(False)
+    bars = ListProperty([])
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.numbers = []
-        self.bars = []
         self.ref_x = []
         # pylint: disable=no-member
         self.bind(size=self.resize_bars)

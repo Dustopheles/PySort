@@ -7,18 +7,37 @@ try:
     from src.configs.generator_config import GeneratorConfig
     from src.configs.animation_config import AnimationConfig
     from src.configs.color_config import ColorConfig
+    from src.util.decorators import singleton
+    from src.util.context import Context
 except ImportError as i_err:
     print(i_err)
 
-class Settings():
+
+@singleton
+class SettingsViewModel():
     """Settings class."""
     numbers = GeneratorConfig()
     colors = ColorConfig()
     durations = AnimationConfig()
+    context = Context()
+
     def __init__(self, ids) -> None:
         self.ids = ids
         self.color_widget = None
+        self.on_init()
+
+    def on_init(self) -> None:
+        """Bind properties."""
+        self.ids["save_bttn"].bind(on_press=self.save_settings)
+        self.ids["save_n_load_bttn"].bind(on_press=self.save_settings)
+        self.ids["reset_bttn"].bind(on_press=self.reset_settings)
+        self.context.bind(in_progress=self.on_sort_state_changed)
         self.bind_colors()
+        self.update_settings_inputs()
+
+    def on_sort_state_changed(self, _widget, value) -> None:
+        """Handle button states."""
+        self.disabled_widgets(value, "save_bttn", "reset_bttn")
 
     def bind_colors(self) -> None:
         """Bind color buttons."""
@@ -56,14 +75,19 @@ class Settings():
 
     def update_widget_colors(self) -> None:
         """Update colors of widgets where no binding is available."""
-        self.ids["bars"].redraw_rectangle()
+        #self.ids["bars"].redraw_rectangle()
 
-    def save_settings(self) -> None:
+    def save_settings(self, *_args) -> None:
         """Save settings to dicts."""
         self.save_generator()
         self.save_durations()
         self.save_colors()
         self.update_settings_inputs()
+
+    def save_n_load_settings(self, *_args) -> None:
+        """Save settings and reload."""
+        self.save_settings(*_args)
+        self.enable_widgets('save_bttn', 'reset_bttn')
 
     def save_generator(self) -> None:
         """Save number generator settings to class."""
@@ -91,7 +115,7 @@ class Settings():
 
         self.colors.set_values(**color_kwargs)
 
-    def reset_settings(self) -> None:
+    def reset_settings(self, *_args) -> None:
         """Reset settings to fallback values."""
         self.numbers.reset()
         self.durations.reset()
@@ -114,3 +138,22 @@ class Settings():
     def change_color(self, _widget, color) -> None:
         """Change color indicator."""
         self.color_widget.background_color = color
+
+    def disable_widgets(self, *args):
+        """Disable list of widgets."""
+        for ident in args:
+            self.ids[ident].disabled = True
+
+    def enable_widgets(self, *args):
+        """Enable list of widgets."""
+        for ident in args:
+            self.ids[ident].disabled = False
+
+    def disabled_widgets(self, state: bool, *args) -> None:
+        """Switch disabled state of widgets."""
+        for ident in args:
+            self.ids[ident].disabled = state
+
+    def popup_on_press(self, *_args) -> None:
+        """Popup on button press event."""
+        self.create_popup(*_args)

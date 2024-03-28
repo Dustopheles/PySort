@@ -1,0 +1,52 @@
+#: include src/widgets/custom_widgets.kv
+#: import VisualizerView src.view.visualizer_view.VisualizerView
+
+<VisualizerView>
+    cols: 1
+    rows: 3
+    HeaderBar:
+        EventButton:
+            width: 150
+            id: load_bttn
+            text: 'Neu'
+
+        EventButton:
+            width: 150
+            id: start_bttn
+            text: 'Start'
+            disabled: True
+
+        EventButton:
+            width: 150
+            id: stop_bttn
+            text: 'Stop'
+
+        ActionButton:
+            id: previous_bttn
+            width: 50
+            text: '<'
+            disabled: True
+
+        ActionButton
+            id: next_bttn
+            width: 50
+            text: '>'
+            disabled: True
+        
+        Spinner:
+            id: sort_spinner
+            width: 250
+            size_hint_x: None
+            text: 'Bubblesort'
+            values: 'Bubblesort'
+            canvas:
+                Color:
+                    rgba: selected_color
+                Triangle:
+                    points: (self.x+self.width, self.y, self.x+self.width-15, self.y , self.x+self.width, self.y+15)
+
+    BarChartLayout:
+        id: bars
+
+    InfoLayout:
+        width: self.width

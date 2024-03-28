@@ -1,9 +1,9 @@
-#: include src/kv/overwrites.kv
+#: include src/style/overwrites.kv
 
 #: import InfoLayout src.widgets.info_layout.InfoLayout
 #: import FloatInput src.widgets.float_input.FloatInput
 #: import IntInput src.widgets.int_input.IntInput
-#: import BarLayout src.widgets.bar_layout.BarLayout
+#: import BarChartLayout src.widgets.bar_chart_layout.BarChartLayout
 
 <HeaderLabel@Label>:
     size_hint_y: None
@@ -49,13 +49,6 @@
     text_size: 120, None
 
 <EventButton@Button>:
-    size_hint_x: None
-    background_normal: "res/bttn_normal.png"
-    background_disabled_normal: "res/bttn_pressed.png"
-    background_down: "res/bttn_pressed.png"
-    background_disabled_down: "res/bttn_pressed.png"
-
-<ActionButton@Button>:
     size_hint_x: None
     background_normal: "res/bttn_normal.png"
     background_disabled_normal: "res/bttn_pressed.png"

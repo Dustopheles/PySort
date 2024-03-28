@@ -10,7 +10,7 @@ from kivy.lang import Builder
 # PyInstaller imports for kivy
 from kivy.resources import resource_add_path, resource_find
 
-from src.widgets.main_widget import MainWidget
+from src.view.main_view import MainView
 
 
 class SortApp(App):
@@ -18,8 +18,8 @@ class SortApp(App):
     def build(self):
         self.title = 'PySort - Visualisierer für Sortierverfahren'
         self.configurate()
-        Builder.load_file('src/kv/main.kv')
-        return MainWidget()
+        Builder.load_file('src/view/main_view.kv')
+        return MainView()
 
     def configurate(self):
         """Set kivy config values."""
