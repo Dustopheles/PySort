@@ -46,21 +46,23 @@
                 orientation: 'vertical'
 
                 SettingsToggleButton:
+                    id: generator_bttn
+                    tab: "generator_tab"
                     state: 'down'
                     text: 'Generator'
                     group: 'Settings'
-                    on_press: root.ids['settings_panel'].switch_to(root.ids['generator_tab'])
                 
                 SettingsToggleButton:
+                    id: animation_bttn
+                    tab: "animation_tab"
                     text: 'Animation'
                     group: 'Settings'
-                    on_press: root.ids['settings_panel'].switch_to(root.ids['animation_tab'])
                 
                 SettingsToggleButton:
+                    id: colors_bttn
+                    tab: "colors_tab"
                     text: 'Farben'
                     group: 'Settings'
-                    group: 'Settings'
-                    on_press: root.ids['settings_panel'].switch_to(root.ids['colors_tab'])
                 
                 Widget
 

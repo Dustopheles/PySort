@@ -9,31 +9,17 @@ class Operation():
     timeout: float = 0.0
     index_pair: tuple = ()
     event: object = None
-    widgets: list[object] = field(default_factory=list)
-
-    def widget_pair(self) -> tuple:
-        """Return widgets from index."""
-        a = self.widgets[self.index_pair[0]]
-        b = self.widgets[self.index_pair[1]]
-        return (a, b)
+    numbers_before: list[int] = field(default_factory=list)
 
     def number_pair(self) -> tuple:
-        """Return numbers from indexed widgets."""
-        widget_pair = self.widget_pair()
-        a = int(widget_pair[0].text)
-        b = int(widget_pair[1].text)
-        return (a, b)
-
-    def numbers_before(self) -> list:
-        """Return numbers from widgets."""
-        numbers = []
-        for widget in self.widgets:
-            numbers.append(int(widget.text))
-        return numbers
+        """Return numbers of indexes."""
+        num_a = self.numbers_before[self.index_pair[0]]
+        num_b = self.numbers_before[self.index_pair[1]]
+        return (num_a, num_b)
 
     def numbers_after(self) -> list:
-        """Return numbers from widgets."""
-        numbers = self.numbers_before()
+        """Return numbers after operation."""
+        numbers = self.numbers_before
         if self.operation == "compare":
             return numbers
         tmp = numbers[self.index_pair[0]]

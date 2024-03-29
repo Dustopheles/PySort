@@ -1,21 +1,20 @@
-"""Settings logic module."""
+"""ViewModel module for MVVM pattern for settings view model."""
 
 from kivy.uix.popup import Popup
 from kivy.uix.colorpicker import ColorPicker
 
-try:
-    from src.configs.generator_config import GeneratorConfig
-    from src.configs.animation_config import AnimationConfig
-    from src.configs.color_config import ColorConfig
-    from src.util.decorators import singleton
-    from src.util.context import Context
-except ImportError as i_err:
-    print(i_err)
+# pylint: disable=no-name-in-module
+# pylint: disable=import-error
+from src.configs.generator_config import GeneratorConfig
+from src.configs.animation_config import AnimationConfig
+from src.configs.color_config import ColorConfig
+from src.util.decorators import singleton
+from src.util.context import Context
 
 
 @singleton
 class SettingsViewModel():
-    """Settings class."""
+    """ViewModel class for settings."""
     numbers = GeneratorConfig()
     colors = ColorConfig()
     durations = AnimationConfig()
@@ -28,22 +27,30 @@ class SettingsViewModel():
 
     def on_init(self) -> None:
         """Bind properties."""
-        self.ids["save_bttn"].bind(on_press=self.save_settings)
-        self.ids["save_n_load_bttn"].bind(on_press=self.save_settings)
-        self.ids["reset_bttn"].bind(on_press=self.reset_settings)
+        self.ids["save_bttn"].bind(on_release=self.save_settings)
+        self.ids["save_n_load_bttn"].bind(on_release=self.save_settings)
+        self.ids["reset_bttn"].bind(on_release=self.reset_settings)
+        self.ids["generator_bttn"].bind(on_release=self.switch_tab)
+        self.ids["animation_bttn"].bind(on_release=self.switch_tab)
+        self.ids["colors_bttn"].bind(on_release=self.switch_tab)
+
         self.context.bind(in_progress=self.on_sort_state_changed)
         self.bind_colors()
         self.update_settings_inputs()
 
+    def switch_tab(self, widget, *_args) -> None:
+        """Switch tab to selected."""
+        self.ids['settings_panel'].switch_to(self.ids[widget.tab])
+
     def on_sort_state_changed(self, _widget, value) -> None:
         """Handle button states."""
-        self.disabled_widgets(value, "save_bttn", "reset_bttn")
+        self.set_disabled(value, "save_bttn", "reset_bttn")
 
     def bind_colors(self) -> None:
         """Bind color buttons."""
         for key, value in self.ids.items():
             if "color_" in key:
-                value.bind(on_press=self.create_popup)
+                value.bind(on_release=self.create_popup)
 
     def update_settings_inputs(self) -> None:
         """Update settings TextInputs."""
@@ -87,7 +94,7 @@ class SettingsViewModel():
     def save_n_load_settings(self, *_args) -> None:
         """Save settings and reload."""
         self.save_settings(*_args)
-        self.enable_widgets('save_bttn', 'reset_bttn')
+        self.set_disabled(False, 'save_bttn', 'reset_bttn')
 
     def save_generator(self) -> None:
         """Save number generator settings to class."""
@@ -139,21 +146,11 @@ class SettingsViewModel():
         """Change color indicator."""
         self.color_widget.background_color = color
 
-    def disable_widgets(self, *args):
-        """Disable list of widgets."""
-        for ident in args:
-            self.ids[ident].disabled = True
-
-    def enable_widgets(self, *args):
-        """Enable list of widgets."""
-        for ident in args:
-            self.ids[ident].disabled = False
-
-    def disabled_widgets(self, state: bool, *args) -> None:
+    def set_disabled(self, state: bool, *args) -> None:
         """Switch disabled state of widgets."""
         for ident in args:
             self.ids[ident].disabled = state
 
-    def popup_on_press(self, *_args) -> None:
-        """Popup on button press event."""
+    def popup_on_release(self, *_args) -> None:
+        """Popup on button release event."""
         self.create_popup(*_args)

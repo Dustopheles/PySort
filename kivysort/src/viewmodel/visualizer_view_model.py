@@ -1,23 +1,22 @@
-"""Visualizer logic module."""
+"""ViewModel module for MVVM pattern for visualizer view model."""
 
 import random
 
 from kivy.clock import Clock
 
-try:
-    from src.configs.generator_config import GeneratorConfig
-    from src.configs.animation_config import AnimationConfig
-    from src.util.sort_handler import SortHandler
-    from src.util.event_scheduler import EventScheduler
-    from src.util.decorators import singleton
-    from src.util.context import Context
-except ImportError as i_err:
-    print(i_err)
+# pylint: disable=no-name-in-module
+# pylint: disable=import-error
+from src.configs.generator_config import GeneratorConfig
+from src.configs.animation_config import AnimationConfig
+from src.util.sort_handler import SortHandler
+from src.util.event_scheduler import EventScheduler
+from src.util.decorators import singleton
+from src.util.context import Context
 
 
 @singleton
 class VisualizerViewModel():
-    """Visualizer class."""
+    """ViewModel class for visualizer."""
     numbers = GeneratorConfig()
     durations = AnimationConfig()
     schedular = EventScheduler()
@@ -31,11 +30,11 @@ class VisualizerViewModel():
 
     def on_init(self) -> None:
         """Bind properties on load."""
-        self.ids["load_bttn"].bind(on_press=self.load)
-        self.ids["start_bttn"].bind(on_press=self.start)
-        self.ids["stop_bttn"].bind(on_press=self.stop)
-        self.ids["previous_bttn"].bind(on_press=self.previous)
-        self.ids["next_bttn"].bind(on_press=self.next)
+        self.ids["load_bttn"].bind(on_release=self.load)
+        self.ids["start_bttn"].bind(on_release=self.start)
+        self.ids["stop_bttn"].bind(on_release=self.stop)
+        self.ids["previous_bttn"].bind(on_release=self.previous)
+        self.ids["next_bttn"].bind(on_release=self.next)
         self.ids["sort_spinner"].values = SortHandler.available_sorts()
         self.ids["sort_spinner"].bind(text=self.change_sort)
 
@@ -46,39 +45,39 @@ class VisualizerViewModel():
     def load(self, *_args) -> None:
         """Generate random number."""
         self.context.in_progress = False
-        self.enable_widgets('start_bttn', 'stop_bttn',
-                            'next_bttn', 'previous_bttn')
+        self.set_disabled(False, 'start_bttn', 'stop_bttn', 'next_bttn', 'previous_bttn')
         numbers = []
         for _i in range(self.numbers.numbers_length):
             numbers.append(random.randint(self.numbers.numbers_lower_limit,
                                           self.numbers.numbers_upper_limit))
 
-        self.ids["bars"].numbers = numbers
-        self.ids["bars"].clear_bars()
-        self.ids["bars"].build_bars()
+        self.ids["bar_chart"].numbers = numbers
+        self.ids["bar_chart"].clear_bars()
+        self.ids["bar_chart"].build_bars()
 
         self.schedular.clear_scheduler()
-        self.schedular.bar_layout = self.ids["bars"]
+        self.schedular.bar_chart = self.ids["bar_chart"]
+        self.schedular.bars = self.ids["bar_chart"].bars
         sort_name = self.ids["sort_spinner"].text
         self.sort = SortHandler.get_sort(sort=sort_name, numbers=numbers,)
 
+        self.sort.start_sort()
+
     def start(self, *_args) -> None:
         """Start sorting animation."""
-        self.context.in_progress = True
-        self.disable_widgets('start_bttn',
-                             'next_bttn', 'previous_bttn')
-        self.call_sort()
-
-    def call_sort(self, *_args) -> None:
-        """Call selected sorting class."""
-        if not self.schedular.operations:
-            self.sort.start_sort()
+        if not self.sort:
             return
-
+        self.context.in_progress = True
+        self.set_disabled(True, 'start_bttn', 'next_bttn', 'previous_bttn')
         self.correct_zero()
         self.correct_indexes()
 
         ident = self.schedular.loop_counter
+        if self.schedular.operations[ident] == 0:
+            for operation in self.schedular.operations:
+                operation.event()
+            return
+
         for i in range(ident, len(self.schedular.operations)):
             timeout = (self.schedular.operations[i].timeout -
                        self.schedular.operations[ident].timeout)
@@ -87,8 +86,7 @@ class VisualizerViewModel():
 
     def stop(self, *_args) -> None:
         """Stop animation."""
-        self.enable_widgets('start_bttn',
-                            'next_bttn', 'previous_bttn')
+        self.set_disabled(False, 'start_bttn', 'next_bttn', 'previous_bttn')
         if not self.sort:
             return
         for operation in self.schedular.operations:
@@ -102,8 +100,11 @@ class VisualizerViewModel():
 
     def correct_indexes(self) -> None:
         """Sync local and object counters."""
-        if self.loop_id != self.schedular.loop_counter:
-            self.schedular.loop_counter -= 1
+        if self.loop_id == self.schedular.loop_counter:
+            return
+        if self.schedular.loop_counter == 0:
+            return
+        self.schedular.loop_counter -= 1
 
     def previous(self, *_args) -> None:
         """Go to previous animation step."""
@@ -130,7 +131,7 @@ class VisualizerViewModel():
         event()
         self.loop_id -= 1
         timeout = self.get_timeout(self.schedular.operations[self.schedular.loop_counter-1])
-        Clock.schedule_once(self.enable_controls, timeout)
+        Clock.schedule_once(self.re_enable_controls, timeout)
 
     def next(self, *_args) -> None:
         """Go to next animation step."""
@@ -147,15 +148,14 @@ class VisualizerViewModel():
         if index >= len(self.schedular.operations):
             return
 
-        self.ids['next_bttn'].disabled = True
-        self.ids['previous_bttn'].disabled = True
+        self.set_disabled(True, "next_bttn", "previous_bttn")
 
         event = self.schedular.operations[index].event
         event.timeout = 0.1
         event()
         self.loop_id = self.schedular.loop_counter + 1
         timeout = self.get_timeout(self.schedular.operations[self.schedular.loop_counter])
-        Clock.schedule_once(self.enable_controls, timeout)
+        Clock.schedule_once(self.re_enable_controls, timeout)
 
     def get_timeout(self, operation: str) -> float:
         """Get timeout for animation."""
@@ -166,17 +166,11 @@ class VisualizerViewModel():
             timout = self.durations.duration_compare + self.durations.duration_pause
         return timout
 
-    def enable_controls(self, *_args) -> None:
+    def re_enable_controls(self, *_args) -> None:
         """Enabel manuel controls."""
-        self.ids['next_bttn'].disabled = False
-        self.ids['previous_bttn'].disabled = False
+        self.set_disabled(False, "next_bttn", "previous_bttn")
 
-    def disable_widgets(self, *args):
-        """Disable list of widgets."""
+    def set_disabled(self, state: bool, *args) -> None:
+        """Switch disabled state of widgets."""
         for ident in args:
-            self.ids[ident].disabled = True
-
-    def enable_widgets(self, *args):
-        """Enable list of widgets."""
-        for ident in args:
-            self.ids[ident].disabled = False
+            self.ids[ident].disabled = state

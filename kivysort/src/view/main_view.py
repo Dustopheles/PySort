@@ -8,10 +8,10 @@ from src.viewmodel.main_view_model import MainViewModel
 
 
 class MainView(TabbedPanel):
-    """Root widget class for view."""
+    """Root widget class for main view."""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.view_model: object
+        self.view_model: MainViewModel
 
     def on_kv_post(self, base_widget):
         """Assign ViewModel after kv lang rules are applied."""

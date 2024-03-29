@@ -8,10 +8,10 @@ from src.viewmodel.visualizer_view_model import VisualizerViewModel
 
 
 class VisualizerView(GridLayout):
-    """Root widget class for view."""
+    """Root widget class for visualizer view."""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.view_model: object
+        self.view_model: VisualizerViewModel
 
     def on_kv_post(self, base_widget):
         """Assign ViewModel after kv lang rules are applied."""
