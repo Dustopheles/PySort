@@ -2,9 +2,10 @@
 
 from kivy.uix.tabbedpanel import GridLayout
 
-# pylint: disable=no-name-in-module
-# pylint: disable=import-error
-from src.viewmodel.settings_view_model import SettingsViewModel
+try:
+    from src.viewmodel.settings_view_model import SettingsViewModel
+except ImportError as e:
+    raise e
 
 
 class SettingsView(GridLayout):

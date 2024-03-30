@@ -2,8 +2,8 @@
 
 try:
     from src.util.decorators import singleton
-except ImportError as i_err:
-    print(i_err)
+except ImportError as e:
+    raise e
 
 
 @singleton
@@ -13,7 +13,6 @@ class GeneratorConfig():
         self.numbers_length: int = 10
         self.numbers_lower_limit: int = 1
         self.numbers_upper_limit: int = 30
-
 
     def _allowed_input(self, kwargs: dict) -> dict:
         """Return corrected problematic input values."""

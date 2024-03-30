@@ -1,4 +1,4 @@
-"""Bar layout widget."""
+"""Bar chart layout widget."""
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Rectangle, Color
@@ -9,11 +9,11 @@ try:
     from src.widgets.bar_widget import BarWidget
     from src.configs.generator_config import GeneratorConfig
     from src.configs.color_config import ColorConfig
-except ImportError as i_err:
-    print(i_err)
+except ImportError as e:
+    raise e
 
 class BarChartLayout(FloatLayout):
-    """Bar layout widget class."""
+    """Bar chart layout widget class."""
     freeze = BooleanProperty(False)
     bars = ListProperty([])
 

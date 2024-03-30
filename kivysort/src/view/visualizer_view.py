@@ -2,9 +2,10 @@
 
 from kivy.uix.tabbedpanel import GridLayout
 
-# pylint: disable=no-name-in-module
-# pylint: disable=import-error
-from src.viewmodel.visualizer_view_model import VisualizerViewModel
+try:
+    from src.viewmodel.visualizer_view_model import VisualizerViewModel
+except ImportError as e:
+    raise e
 
 
 class VisualizerView(GridLayout):

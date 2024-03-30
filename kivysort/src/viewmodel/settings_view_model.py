@@ -3,13 +3,14 @@
 from kivy.uix.popup import Popup
 from kivy.uix.colorpicker import ColorPicker
 
-# pylint: disable=no-name-in-module
-# pylint: disable=import-error
-from src.configs.generator_config import GeneratorConfig
-from src.configs.animation_config import AnimationConfig
-from src.configs.color_config import ColorConfig
-from src.util.decorators import singleton
-from src.util.context import Context
+try:
+    from src.configs.generator_config import GeneratorConfig
+    from src.configs.animation_config import AnimationConfig
+    from src.configs.color_config import ColorConfig
+    from src.util.decorators import singleton
+    from src.util.context import Context
+except ImportError as e:
+    raise e
 
 
 @singleton
@@ -28,7 +29,7 @@ class SettingsViewModel():
     def on_init(self) -> None:
         """Bind properties."""
         self.ids["save_bttn"].bind(on_release=self.save_settings)
-        self.ids["save_n_load_bttn"].bind(on_release=self.save_settings)
+        self.ids["save_n_load_bttn"].bind(on_release=self.save_n_load_settings)
         self.ids["reset_bttn"].bind(on_release=self.reset_settings)
         self.ids["generator_bttn"].bind(on_release=self.switch_tab)
         self.ids["animation_bttn"].bind(on_release=self.switch_tab)
@@ -95,6 +96,7 @@ class SettingsViewModel():
         """Save settings and reload."""
         self.save_settings(*_args)
         self.set_disabled(False, 'save_bttn', 'reset_bttn')
+        self.context.load = True
 
     def save_generator(self) -> None:
         """Save number generator settings to class."""

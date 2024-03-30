@@ -11,10 +11,6 @@ Das Ziel des Projekts ist eine Visualisierung verschiedener Sortierverfahren, da
 
 Als GUI Framework wird [kivy](https://kivy.org/) genutzt.
 
-Kivy Python Unstützung
-
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/kivy)
-
 Projektumfeld
 ----------------------------------------
 
@@ -56,42 +52,36 @@ Sortierverfahren können als Module unter `./kivysort/sorting` eingebunden werde
 - Modulname: `{sortiername}_sort.py`
 - Klassenname: `class {Sortiername}sort(Sort):`
 - Import: `from src.sorting.sort import Sort`
-- Attribut in Konstruktor: `self.sort_name = {Sortiername}`
-- Zuweisung vor der Sortierung: `i_list = self.numbers`
-- Zuweisung nach Sortierung: `self.sorted_numbers = i_list`
-- Verständnis zu Vergleichs- und Tauschschritten
-- Übergabe der Indexes mit Aktionstyp in `self.schedule_event(typ, index_1, index_2)`
+- Attribut in Konstruktor: `self.name = {Sortiername}`
+- Zu sortierende Liste: `numbers` aus Übergabeparametern
+- Verständnis zu Vergleichs- und Tauschschritten des Sortierverfahrens
+- Übergabe des Indexe-Paars mit Aktionstyp in `self.schedule_event(Typ, Index a, Index b)`
+- Rückgabe der sortierten Zahlen: `numbers`
 
 `sort_handler.py` findet Sortiermodule automatisch, solange diese Kriterien erfüllt sind.
 
 ### Beispiel bubble_sort.py
 
 ```py
-"""Bubblesort module."""
-
 from src.sorting.sort import Sort
 
 
 class Bubblesort(Sort):
     """Bubblesort class."""
-    # pylint: disable=all
     def __init__(self, **kwargs):
-        super(Bubblesort, self).__init__(**kwargs)
-        self.sort_name = 'Bubblesort'
+        super().__init__(**kwargs)
+        self.name = 'Bubblesort'
 
-    def sort(self) -> None:
+    def sort(self, numbers: list) -> list:
         """Bubblesort algorithm."""
-        i_list = self.numbers
-        length = len(i_list)
+        length = len(numbers)
         for i in range(length-1):
             for j in range(length-1-i):
                 self.schedule_event("compare", j, j+1)
-                if i_list[j] > i_list[j+1]:
-                    tmp = i_list[j]
-                    i_list[j] = i_list[j+1]
-                    i_list[j+1] = tmp
+                if numbers[j] > numbers[j+1]:
+                    numbers[j], numbers[j+1] = numbers[j+1], numbers[j]
                     self.schedule_event("switch", j, j+1)
-        self.sorted_numbers = i_list
+        return numbers
 ```
 
 ## Projektteam
@@ -101,7 +91,3 @@ Das Projektteam von PySort.
 - [Dustopheles](https://github.com/Dustopheles)
 - [dnzkrkmz](https://github.com/dnzkrkmz)
 - [realAnzary](https://github.com/realAnzary)
-
-### Mitwirkende
-
-Dieses Projekt existiert außerdem in diesem Zustand dank [all den Leuten, die daran mitgearbeitet haben](https://github.com/Dustopheles/PySort/graphs/contributors).

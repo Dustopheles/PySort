@@ -2,9 +2,10 @@
 
 from kivy.uix.tabbedpanel import TabbedPanel
 
-# pylint: disable=no-name-in-module
-# pylint: disable=import-error
-from src.viewmodel.main_view_model import MainViewModel
+try:
+    from src.viewmodel.main_view_model import MainViewModel
+except ImportError as e:
+    raise e
 
 
 class MainView(TabbedPanel):

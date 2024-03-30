@@ -5,8 +5,8 @@ from kivy.graphics import Color, Rectangle
 
 try:
     from src.configs.color_config import ColorConfig
-except ImportError as i_err:
-    print(i_err)
+except ImportError as e:
+    raise e
 
 class NumberLabel(Label):
     """NumberLabel class."""

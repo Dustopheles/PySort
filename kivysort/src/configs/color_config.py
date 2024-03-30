@@ -2,8 +2,8 @@
 
 try:
     from src.util.decorators import singleton
-except ImportError as i_err:
-    print(i_err)
+except ImportError as e:
+    raise e
 
 
 @singleton

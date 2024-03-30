@@ -12,13 +12,21 @@ class Operation():
     numbers_before: list[int] = field(default_factory=list)
 
     def number_pair(self) -> tuple:
-        """Return numbers of indexes."""
+        """Return corresponding number pair of index pair.
+
+        Returns:
+            tuple: (number a , number b)
+        """
         num_a = self.numbers_before[self.index_pair[0]]
         num_b = self.numbers_before[self.index_pair[1]]
         return (num_a, num_b)
 
-    def numbers_after(self) -> list:
-        """Return numbers after operation."""
+    def numbers_after(self) -> list[int]:
+        """Return numbers after operation.
+
+        Returns:
+            list[int]: list of integers after operation
+        """
         numbers = self.numbers_before
         if self.operation == "compare":
             return numbers

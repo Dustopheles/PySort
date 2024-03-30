@@ -4,14 +4,15 @@ import random
 
 from kivy.clock import Clock
 
-# pylint: disable=no-name-in-module
-# pylint: disable=import-error
-from src.configs.generator_config import GeneratorConfig
-from src.configs.animation_config import AnimationConfig
-from src.util.sort_handler import SortHandler
-from src.util.event_scheduler import EventScheduler
-from src.util.decorators import singleton
-from src.util.context import Context
+try:
+    from src.configs.generator_config import GeneratorConfig
+    from src.configs.animation_config import AnimationConfig
+    from src.util.sort_handler import SortHandler
+    from src.scheduler.event_scheduler import EventScheduler
+    from src.util.decorators import singleton
+    from src.util.context import Context
+except ImportError as e:
+    raise e
 
 
 @singleton
@@ -21,7 +22,7 @@ class VisualizerViewModel():
     durations = AnimationConfig()
     schedular = EventScheduler()
     context = Context()
-    sort: object
+    sort: object = None
 
     def __init__(self, ids) -> None:
         self.ids = ids
@@ -37,9 +38,14 @@ class VisualizerViewModel():
         self.ids["next_bttn"].bind(on_release=self.next)
         self.ids["sort_spinner"].values = SortHandler.available_sorts()
         self.ids["sort_spinner"].bind(text=self.change_sort)
+        self.context.bind(load=self.on_load)
 
     def change_sort(self, _widget, _text) -> None:
         """Change sort type."""
+        self.load()
+
+    def on_load(self, *_args):
+        """React to load property"""
         self.load()
 
     def load(self, *_args) -> None:

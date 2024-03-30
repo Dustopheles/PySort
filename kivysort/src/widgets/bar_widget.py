@@ -8,13 +8,14 @@ from kivy.properties import StringProperty
 try:
     from src.configs.color_config import ColorConfig
     from src.widgets.number_label import NumberLabel
-except ImportError as i_err:
-    print(i_err)
+except ImportError as e:
+    raise e
 
 class BarWidget(Label):
     """Bar widget class."""
     state = StringProperty(None)
     colors = ColorConfig()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.size_hint = (None, None)

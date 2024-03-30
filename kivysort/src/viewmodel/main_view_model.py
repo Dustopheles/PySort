@@ -1,8 +1,9 @@
 """ViewModel module for MVVM pattern for main view model."""
 
-# pylint: disable=no-name-in-module
-# pylint: disable=import-error
-from src.util.decorators import singleton
+try:
+    from src.util.decorators import singleton
+except ImportError as e:
+    raise e
 
 
 @singleton
