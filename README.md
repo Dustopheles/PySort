@@ -28,18 +28,22 @@ Betriebssysteme als Produktions- und Testumgebungen.
 Benutzung
 ----------------------------------------
 
-Die Abhängigkeiten des Projektes befinden sich in der `requirements.txt` in `./kivysort`.
+Abhängigkeiten des Projektes befinden sich in der `requirements.txt`
 
 Es wird empfohlen eine virtuelle Umgebung mit [venv](https://docs.python.org/3/library/venv.html) einzurichten und die Abhängikeiten mit [pip](https://pip.pypa.io/en/stable/) zu installieren.
 
-Die Applikation kann über die `main.pyw` in `./kivysort` gestartet werden.
+Die Applikation kann über die `main.pyw` in dem Programmverzeichnis gestartet werden.
 
-Das `.pyw` Format verhindert das erscheinen eines Konsolenfensters.
+Das `.pyw` Format verhindert das erscheinen eines Konsolenfensters unter Windows.
+
+### Balkendiagramm
+
+[SortExample.webm](https://github.com/Dustopheles/PySort/assets/128293762/7b5e5b21-d9f3-42f7-9120-cc50849bb29b)
 
 Installation
 ----------------------------------------
 
-PySort kann für Windows 8/10/11 mit [PyInstaller](https://pyinstaller.org/en/stable/) als Anwendung `.exe` gebaut werden.
+PySort kann für Windows 8/10/11 mit [PyInstaller](https://pyinstaller.org/en/stable/) aus dem Projekt eine Anwendung bauen.
 Dafür liegt ein automatisiertes Bauskript bei: `windows_builder.py`
 
 Der Programmordner befindet sich nach dem Bau in dem Verzeichnis `dist`. Mehr Informationen gibt es auf der [Kivi wiki](https://kivy.org/doc/stable/guide/packaging-windows.html).
