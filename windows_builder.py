@@ -4,7 +4,7 @@ import os
 import PyInstaller.__main__
 
 parameter_list = [
-    '.\\kivysort\\main.pyw',
+    '.\\pysort\\main.pyw',
     '--noconfirm',
     '--log-level=WARN',
     '--name=pysorter',
@@ -20,7 +20,7 @@ with open('pysorter.spec', 'r', encoding='utf8') as file:
 SPEC = 'from kivy_deps import sdl2, glew\n' + SPEC
 
 abs_path = os.path.abspath('.')
-local_path = os.path.join(abs_path, 'kivysort', '')
+local_path = os.path.join(abs_path, 'pysort', '')
 local_path = local_path.replace('\\', '\\\\')
 
 SPEC = SPEC.replace('a.datas,', "a.datas, *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],")

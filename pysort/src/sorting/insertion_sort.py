@@ -1,7 +1,9 @@
 """Insertionsort module."""
 
-# pylint: disable=all
-from src.sorting.sort import Sort
+try:
+    from src.sorting.sort import Sort
+except ImportError as e:
+    raise e
 
 
 class Insertionsort(Sort):

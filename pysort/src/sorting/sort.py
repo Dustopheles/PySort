@@ -1,8 +1,9 @@
 """Sort base module."""
 
-# pylint: disable=no-name-in-module
-# pylint: disable=import-error
-from src.scheduler.event_scheduler import EventScheduler
+try:
+    from src.scheduler.event_scheduler import EventScheduler
+except ImportError as e:
+    raise e
 
 
 class Sort():

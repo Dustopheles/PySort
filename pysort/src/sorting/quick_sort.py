@@ -1,7 +1,9 @@
 """Quicksort module."""
 
-# pylint: disable=all
-from src.sorting.sort import Sort
+try:
+    from src.sorting.sort import Sort
+except ImportError as e:
+    raise e
 
 
 class Quicksort(Sort):
@@ -19,6 +21,7 @@ class Quicksort(Sort):
         return self.array
 
     def partition(self, low, high):
+        """List partition"""
         pivot = self.array[high]
         i = low - 1
         for j in range(low, high):
@@ -32,6 +35,7 @@ class Quicksort(Sort):
         return i + 1
 
     def quicksort(self, low, high):
+        """Quicksort."""
         if low < high:
             pi = self.partition(low, high)
             self.quicksort(low, pi - 1)

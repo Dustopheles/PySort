@@ -4,7 +4,7 @@ import os
 import PyInstaller.__main__
 
 parameter_list = [
-    './kivysort/main.pyw',
+    './pysort/main.pyw',
     '--noconfirm',
     '--log-level=WARN',
     '--name=pysorter',

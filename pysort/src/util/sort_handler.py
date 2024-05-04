@@ -46,7 +46,7 @@ class SortHandler():
         Returns:
             str: Path to relative directory
         """
-        path = os.path.join(os.getcwd(), 'kivysort', 'src', 'sorting')
+        path = os.path.join(os.getcwd(), 'pysort', 'src', 'sorting')
         if not os.path.exists(path):
             path = os.path.join(os.getcwd(), 'src', 'sorting')
         if not os.path.exists(path):
