@@ -18,7 +18,7 @@ with open('pysorter.spec', 'r', encoding='utf8') as file:
     SPEC = file.read()
 
 abs_path = os.path.abspath('.')
-local_path = os.path.join(abs_path, 'kivysort', '')
+local_path = os.path.join(abs_path, 'pysort', '')
 
 SPEC = SPEC.replace('exe,', rf"exe, Tree('{local_path}'),")
 
