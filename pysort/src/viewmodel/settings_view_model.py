@@ -103,6 +103,8 @@ class SettingsViewModel():
         numbers_kwargs = {}
         for key, value in self.ids.items():
             if "numbers_" in key:
+                if not value.text:
+                    continue
                 numbers_kwargs[key] = int(value.text)
         self.numbers.set_values(**numbers_kwargs)
 
@@ -111,6 +113,8 @@ class SettingsViewModel():
         duration_kwargs = {}
         for key, value in self.ids.items():
             if "duration_" in key:
+                if not value.text:
+                    continue
                 duration_kwargs[key] = float(value.text)
 
         self.durations.set_values(**duration_kwargs)
