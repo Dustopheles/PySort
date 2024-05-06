@@ -46,10 +46,12 @@ class VisualizerViewModel():
 
     def on_load(self, *_args):
         """React to load property"""
+        self.stop()
         self.load()
 
     def load(self, *_args) -> None:
         """Generate random number."""
+        self.stop()
         self.context.in_progress = False
         self.set_disabled(False, 'start_bttn', 'stop_bttn', 'next_bttn', 'previous_bttn')
         numbers = []

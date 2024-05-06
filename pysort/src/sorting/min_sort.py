@@ -10,7 +10,7 @@ class Minsort(Sort):
     """Minsort class."""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.name = 'Minsort'    
+        self.name = 'Minsort'
 
     def sort(self, numbers: list) -> list:
         """Minsort algorithm."""

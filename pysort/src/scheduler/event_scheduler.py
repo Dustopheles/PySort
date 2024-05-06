@@ -192,6 +192,8 @@ class EventScheduler():
 
     def check_position(self, widget) -> None:
         """Check if widget x is correct, adjust if not."""
+        if widget not in self.bars:
+            return
         index = self.bars.index(widget)
         if widget.x != self.bar_chart.ref_x[index]:
             widget.x = self.bar_chart.ref_x[index]
