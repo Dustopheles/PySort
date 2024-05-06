@@ -82,6 +82,8 @@ class VisualizerViewModel():
         self.correct_indexes()
 
         ident = self.schedular.loop_counter
+        if ident >= len(self.schedular.operations):
+            return
         if self.schedular.operations[ident] == 0:
             for operation in self.schedular.operations:
                 operation.event()
