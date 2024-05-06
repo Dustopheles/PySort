@@ -52,6 +52,7 @@ class VisualizerViewModel():
     def load(self, *_args) -> None:
         """Generate random number."""
         self.stop()
+        self.loop_id = 0
         self.context.in_progress = False
         self.set_disabled(False, 'start_bttn', 'stop_bttn', 'next_bttn', 'previous_bttn')
         numbers = []
