@@ -78,6 +78,7 @@ class VisualizerViewModel():
             return
         self.context.in_progress = True
         self.set_disabled(True, 'start_bttn', 'next_bttn', 'previous_bttn')
+        self.set_disabled(False, 'stop_bttn')
         self.correct_zero()
         self.correct_indexes()
 
@@ -98,6 +99,7 @@ class VisualizerViewModel():
     def stop(self, *_args) -> None:
         """Stop animation."""
         self.set_disabled(False, 'start_bttn', 'next_bttn', 'previous_bttn')
+        self.set_disabled(True, 'stop_bttn')
         if not self.sort:
             return
         for operation in self.schedular.operations:
