@@ -2,6 +2,7 @@
 
 from kivy.uix.popup import Popup
 from kivy.uix.colorpicker import ColorPicker
+from kivy.logger import Logger
 
 try:
     from src.configs.generator_config import GeneratorConfig
@@ -138,8 +139,9 @@ class SettingsViewModel():
     def create_popup(self, widget) -> None:
         """Create popup window"""
         self.color_widget = widget
-        clr_picker = ColorPicker()
+        clr_picker = ColorPicker(color=widget.background_color)
         clr_picker.color = widget.background_color
+        Logger.info("Color Picker: %s", clr_picker.color)
         # pylint: disable=no-member
         clr_picker.bind(color=self.change_color)
         popup = Popup(title='Farbauswahl',
@@ -148,8 +150,10 @@ class SettingsViewModel():
                       size=(450, 450))
         popup.open()
 
-    def change_color(self, _widget, color) -> None:
+    def change_color(self, widget, color) -> None:
         """Change color indicator."""
+        Logger.info("Color Picker: %s", widget.color)
+        Logger.info("Color Change: %s", color)
         self.color_widget.background_color = color
 
     def set_disabled(self, state: bool, *args) -> None:
