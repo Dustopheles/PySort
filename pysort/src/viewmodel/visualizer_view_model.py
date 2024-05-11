@@ -60,6 +60,7 @@ class VisualizerViewModel():
             numbers.append(random.randint(self.numbers.numbers_lower_limit,
                                           self.numbers.numbers_upper_limit))
 
+        self.ids["bar_chart"].redraw_rectangle()
         self.ids["bar_chart"].numbers = numbers
         self.ids["bar_chart"].clear_bars()
         self.ids["bar_chart"].build_bars()

@@ -14,6 +14,7 @@ except ImportError as e:
 
 class BarChartLayout(FloatLayout):
     """Bar chart layout widget class."""
+    config = ColorConfig()
     freeze = BooleanProperty(False)
     bars = ListProperty([])
 
@@ -74,8 +75,7 @@ class BarChartLayout(FloatLayout):
 
     def redraw_rectangle(self) -> None:
         """Redraw and bind canvas rectangle with input rgba."""
-        config = ColorConfig()
-        r, g, b, a = config.color_background
+        r, g, b, a = self.config.color_background
         self.canvas.clear()
         with self.canvas:
             self.canvas_color = Color(r, g, b, a)
