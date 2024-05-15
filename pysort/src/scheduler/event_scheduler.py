@@ -25,6 +25,7 @@ class EventScheduler():
         self.next_timeout = 0
         self.operations = []
         self.stopper = 0
+        self.sorted_numbers = []
 
     def clear_scheduler(self) -> None:
         """Reset singleton values to fallback."""
@@ -122,7 +123,7 @@ class EventScheduler():
     def compare_on_complete(self, _animation, widget) -> None:
         """Change widget state on animation completion and check if widget position is correct."""
         self.check_position(widget)
-        self.check_finished()
+        self.check_finished(widget)
 
 
     def switch_event(self, _timing) -> None:
@@ -158,7 +159,7 @@ class EventScheduler():
     def switch_on_complete(self, _animation, widget) -> None:
         """Change widget state on animation completion and check if widget position is correct."""
         self.check_position(widget)
-        self.check_finished()
+        self.check_finished(widget)
 
 
     def adjust_list(self) -> None:
@@ -177,10 +178,21 @@ class EventScheduler():
             return
 
         for widget in self.bars:
-            widget.state = "default"
+            if widget.state != "sorted":
+                widget.state = "default"
 
-    def check_finished(self) -> None:
+    def check_finished(self, widget) -> None:
         """Check if final iteration, change state of widgets."""
+        index = self.bars.index(widget)
+        final = True
+        for i in range(index+1, len(self.sorted_numbers)-1):
+            if self.sorted_numbers[i] != int(self.bars[i].text):
+                final = False
+
+        if final:
+            if self.sorted_numbers[index] == int(widget.text):
+                widget.state = "sorted"
+
         self.stopper += 1
         if self.stopper > 1:
             self.stopper = 0

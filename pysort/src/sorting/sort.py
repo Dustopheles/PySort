@@ -18,6 +18,7 @@ class Sort():
     def start_sort(self) -> None:
         """Wrapper for sort method to return sorted numbers."""
         self.sorted_numbers = self.sort(self.numbers)
+        self.scheduler.sorted_numbers = self.sorted_numbers
 
     def sort(self, numbers: list[int]) -> list[int]:
         """Abstract sorting method.
