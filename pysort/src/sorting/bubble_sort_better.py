@@ -6,7 +6,7 @@ except ImportError as e:
     raise e
 
 
-class Bubblesort(Sort):
+class BetterBubblesort(Sort):
     """Bubblesort class."""
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -16,7 +16,7 @@ class Bubblesort(Sort):
         """Bubblesort algorithm."""
         length = len(numbers)
         for i in range(length-1):
-            for j in range(length-1):
+            for j in range(length-1-i):
                 self.schedule_event("compare", j, j+1)
                 if numbers[j] > numbers[j+1]:
                     numbers[j], numbers[j+1] = numbers[j+1], numbers[j]

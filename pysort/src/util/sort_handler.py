@@ -18,9 +18,18 @@ class SortHandler():
             object: Sort object
         """
         module_name = "src.sorting." + sort.lower().replace('sort', '_sort')
+        if "better" in module_name:
+            module_name = module_name.replace("better ", "")
+            module_name += "_better"
+            sort = sort.replace(" ", "")
         module = importlib.import_module(module_name)
-        class_name = getattr(module, sort)
-        sort_object = class_name(**kwargs)
+        if not hasattr(module, sort):
+            return None
+        try:
+            class_name = getattr(module, sort)
+            sort_object = class_name(**kwargs)
+        except Exception:
+            return None
         return sort_object
 
     @staticmethod
@@ -34,8 +43,10 @@ class SortHandler():
         modules = os.listdir(path)
         sorts = []
         for module in modules:
-            if "_sort.py" in module.lower():
+            if "_sort" in module:
                 name = module.split('_')[0].capitalize() + 'sort'
+                if "better" in module:
+                    name = f"Better {name}"
                 sorts.append(name)
         return sorts
 

@@ -70,8 +70,8 @@ class VisualizerViewModel():
         self.schedular.bars = self.ids["bar_chart"].bars
         sort_name = self.ids["sort_spinner"].text
         self.sort = SortHandler.get_sort(sort=sort_name, numbers=numbers,)
-
-        self.sort.start_sort()
+        if self.sort:
+            self.sort.start_sort()
 
     def start(self, *_args) -> None:
         """Start sorting animation."""
