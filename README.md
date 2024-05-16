@@ -23,16 +23,26 @@ Das Projekt wurde in der folgenden Umgebung erstellt und getestet.
 Betriebssysteme als Produktions- und Testumgebungen.
 
 - Windows 10
-- Kubuntu 23.10
+- Kubuntu [22.04, 23.10]
 
 Benutzung
 ----------------------------------------
 
 Abhängigkeiten des Projektes befinden sich in der `requirements.txt`
 
-Es wird empfohlen eine virtuelle Umgebung mit [venv](https://docs.python.org/3/library/venv.html) einzurichten und die Abhängikeiten mit [pip](https://pip.pypa.io/en/stable/) zu installieren.
+Es wird empfohlen eine virtuelle Python Umgebung mit [venv](https://docs.python.org/3/library/venv.html) einzurichten.
 
-Die Applikation kann über die `main.pyw` in dem Programmverzeichnis gestartet werden.
+```
+python -m venv env
+```
+
+und die Abhängikeiten mit [pip](https://pip.pypa.io/en/stable/) aus der `requirements.txt` zu installieren.
+
+```
+pip install -r requirements.txt
+```
+
+Die Applikation kann über die `main.pyw` in dem Programmverzeichnis `pysort` gestartet werden.
 
 Das `.pyw` Format verhindert das erscheinen eines Konsolenfensters unter Windows.
 
@@ -46,12 +56,20 @@ Installation
 PySort kann für Windows 8/10/11 mit [PyInstaller](https://pyinstaller.org/en/stable/) aus dem Projekt eine Anwendung bauen.
 Dafür liegt ein automatisiertes Bauskript bei: `windows_builder.py`
 
+PyInstaller empfielt das Programm nicht im Debug Modus zu bauen, ist jedoch mit erhöhten Zeitaufwand möglich.
+
+Um das Projekt mit PyInstaller bauen zu können, werden alle Abhängigkeiten aus `requirements-builder.txt` benötigt.
+
+```
+pip install -r requirements-builder.txt
+```
+
 Der Programmordner befindet sich nach dem Bau in dem Verzeichnis `dist`. Mehr Informationen gibt es auf der [Kivi wiki](https://kivy.org/doc/stable/guide/packaging-windows.html).
 
 Einbindung Sortierverfahren
 ----------------------------------------
 
-Sortierverfahren können als Module unter `./kivysort/sorting` eingebunden werden, dazu müssen folgende Kriterien erfüllt werden
+Sortierverfahren können als Module unter `./pysort/sorting` eingebunden werden, dazu müssen folgende Kriterien erfüllt werden
 
 - Modulname: `{sortiername}_sort.py`
 - Klassenname: `class {Sortiername}sort(Sort):`
